@@ -11,8 +11,6 @@ data class Poi private constructor(
     val newAddressName: String
 ) {
     companion object {
-
-
         fun from(poiSearchResponse: PoiSearchResponse.SearchPoiInfo.Pois.Poi): Poi {
 
             //TODO: 글자 없는 경우 예외 처리 해야 깔끔하게 나옴
@@ -31,8 +29,8 @@ data class Poi private constructor(
             return Poi(
                 poiSearchResponse.id,
                 poiSearchResponse.name,
-                poiSearchResponse.noorLat.toDouble(),
-                poiSearchResponse.noorLon.toDouble(),
+                poiSearchResponse.noorLat,
+                poiSearchResponse.noorLon,
                 oldAddressName,
                 newAddressName
             )

@@ -23,4 +23,5 @@ abstract class BaseFragment<B : ViewDataBinding> constructor(
         binding = DataBindingUtil.inflate(inflater, layoutId, container, false)
         return binding.root
     }
+
 }

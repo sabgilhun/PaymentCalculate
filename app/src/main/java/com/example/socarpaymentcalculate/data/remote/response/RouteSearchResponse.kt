@@ -7,22 +7,31 @@ import com.google.gson.annotations.SerializedName
 data class RouteSearchResponse(
     @SerializedName("type")
     val type: String,
+
     @SerializedName("features")
     val features: List<Feature>
 ) {
+
     data class Feature(
+
         @SerializedName("type")
         val type: String,
+
         @SerializedName("geometry")
         val geometry: Geometry,
+
         @SerializedName("properties")
         val properties: Properties
+
     ) {
+
         data class Geometry(
             @SerializedName("type")
             val type: String,
+
             @SerializedName("coordinates")
             val coordinates: List<Any>
+
         )
 
         data class Properties(
@@ -91,4 +100,5 @@ data class RouteSearchResponse(
             val facilityType: Int?
         )
     }
+
 }

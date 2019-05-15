@@ -2,6 +2,7 @@ package com.example.socarpaymentcalculate
 
 import android.os.Bundle
 import android.util.Log
+import com.example.socarpaymentcalculate.data.model.Poi
 import com.example.socarpaymentcalculate.data.remote.TmapDataSourceImpl
 import com.example.socarpaymentcalculate.databinding.ActivityMainBinding
 import com.example.socarpaymentcalculate.view.base.BaseActivity
@@ -16,33 +17,44 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
 
         var compositeDisposable = CompositeDisposable()
 
-//        compositeDisposable.add(
-//            TmapDataSourceImpl
-//                .getPois("공덕역")
-//                .subscribeOn(Schedulers.newThread())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(
-//                    {
-//                        Log.d("테스트", it.toString())
-//                    },
-//                    {
-//                        Log.d("테스트", "실패")
-//                    })
-//        )
+        var poi: Poi? = null
+        var poi2: Poi? = null
 
-        compositeDisposable.add(
-            TmapDataSourceImpl
-                .getRoutes()
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    {
-                        Log.d("테스트", it)
-                    },
-                    {
-                        Log.d("테스트", "실패")
-                    })
-        )
+        binding.poi.setOnClickListener {
+            compositeDisposable.add(
+                TmapDataSourceImpl
+                    .getPois("공덕역")
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                        {
+                            poi = it[0]
+                            poi2 = it[1]
+
+                        },
+                        {
+                            Log.d("테스트", "실패")
+                        })
+            )
+        }
+
+        binding.route.setOnClickListener {
+            compositeDisposable.add(
+                TmapDataSourceImpl
+                    .getRoutes(poi!!, poi2!!)
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                        {
+                            Log.d("테스트", it.toString())
+                        },
+                        {
+                            it.printStackTrace()
+                            Log.d("테스트", "실패")
+                        })
+            )
+        }
+
     }
 
 }

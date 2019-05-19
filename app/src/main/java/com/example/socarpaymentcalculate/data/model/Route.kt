@@ -9,13 +9,8 @@ data class Route private constructor(
     val coordinates: List<Coordinate>
 
 ) {
-    data class Coordinate(
-        val longitude: Double,
-        val latitude: Double
-    )
 
     companion object {
-
         private const val GEOMETRY_LINE_TYPE = "LineString"
 
         fun from(routeSearchResponse: RouteSearchResponse): Route {
@@ -32,7 +27,7 @@ data class Route private constructor(
                     .map {
                         it.geometry.coordinates.map { coordinate ->
                             val res = coordinate as ArrayList<*>
-                            Coordinate(res[0] as Double, res[1] as Double)
+                            Coordinate.with(res[0] as Double, res[1] as Double)
                         }.toMutableList()
                     }.reduce { acc, mutableList ->
                         acc.addAll(mutableList)
@@ -47,4 +42,5 @@ data class Route private constructor(
             )
         }
     }
+
 }

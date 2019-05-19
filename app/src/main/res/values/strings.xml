@@ -1,3 +1,53 @@
 <resources>
 	<string name="app_name">SocarPaymentCalculate</string>
+	
+	
+	<string name="all_new_morning">올뉴모닝</string>
+	<string name="next_spark">넥스트스파크</string>
+	<string name="the_new_spark">더뉴스파크</string>
+	<string name="ray">레이</string>
+	<string name="the_new_ray">더뉴레이</string>
+	<string name="pride">프라이드</string>
+	<string name="clio">클리오</string>
+	<string name="i_30">i30</string>
+	<string name="all_new_k3">올뉴K3</string>
+	<string name="avante_ad">아반떼AD</string>
+	<string name="the_new_avante">더뉴아반떼</string>
+	<string name="ionic_electric">아이오닉 일렉트릭</string>
+	<string name="volt_ev">볼트EV</string>
+	<string name="k5">K5</string>
+	<string name="k5_lpg">K5(LPG)</string>
+	<string name="sonata_new_rise">쏘나타 뉴라이즈</string>
+	<string name="sonata_new_rise_lpg">쏘나타 뉴라이즈(LPG)</string>
+	<string name="malibu">말리부</string>
+	<string name="sm6">SM6</string>
+	<string name="stinger">스팅어</string>
+	<string name="k7">K7</string>
+	<string name="grandeur_ig">그랜저IG</string>
+	<string name="grandeur_ig_lpg">그랜저IG(LPG)</string>
+	<string name="g80">G80</string>
+	<string name="qm3_diesel">QM3(경유)</string>
+	<string name="stonic">스토닉</string>
+	<string name="stonic_diesel">스토닉(경유)</string>
+	<string name="kona">코나</string>
+	<string name="trax_diesel">트랙스(경유)</string>
+	<string name="tivoli">티볼리</string>
+	<string name="tivoli_diesel">티볼리(경유)</string>
+	<string name="roof_box_tivoli">Thule 루프박스 X 티볼리</string>
+	<string name="sportage_the_bold">스포티지 더볼드</string>
+	<string name="sportage_diesel">스포티지(경유)</string>
+	<string name="tucson_diesel">투싼(경유)</string>
+	<string name="santafe">싼타페</string>
+	<string name="sorento">쏘렌토</string>
+	<string name="sorento_7">쏘렌토 7인승</string>
+	<string name="starex_diesel">스타렉스(경유)</string>
+	<string name="grand_starex_diesel">뉴 그랜드 스타렉(경유)</string>
+	<string name="carnival_diesel">카니발 11인승(경유)</string>
+	<string name="wheelchair_slope_carnival_diesel">휠체어슬로프 X 카니발(경유)</string>
+	<string name="mini_club_man">미니클럽맨</string>
+	<string name="benz_c200">벤츠 C200</string>
+	<string name="jeep_renegade">지프 레니게이드</string>
+	<string name="jaguar_e_pace">재규어 E-PACE</string>
+
+
 </resources>

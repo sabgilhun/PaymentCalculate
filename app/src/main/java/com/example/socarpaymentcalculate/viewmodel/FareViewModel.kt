@@ -9,17 +9,17 @@ import com.example.socarpaymentcalculate.viewmodel.base.BaseViewModel
 
 class FareViewModel : BaseViewModel() {
 
-    private val fare = MutableLiveData<String>()
+    private var route: Route? = null
 
-    private val searchedRoute = MutableLiveData<Route>()
+    private val calculatedFare = MutableLiveData<String>()
 
     private val selectedCarType = MutableLiveData<CarType>()
 
-    private val selectedCarModel = MutableLiveData<CarModel>()
-
     private val carModelList = MutableLiveData<List<CarModel>>()
 
-    fun setSeletedCarType(selectedCarType: CarType) {
+    private val selectedCarModel = MutableLiveData<CarModel>()
+
+    fun onSeletedCarType(selectedCarType: CarType) {
         this.selectedCarType.value = selectedCarType
         carModelList.value =
             CarModel.values()
@@ -28,21 +28,21 @@ class FareViewModel : BaseViewModel() {
                 }.toList()
     }
 
-    fun setSelectedCarModel(selectedCarModel: CarModel) {
+    fun onSelectedCarModel(selectedCarModel: CarModel) {
         this.selectedCarModel.value = selectedCarModel
         calculateFare()
     }
 
-    fun setSearchedRoute(searchedRoute: Route) {
-        this.searchedRoute.value = searchedRoute
+    fun setRoute(route: Route) {
+        this.route = route
         calculateFare()
     }
 
     private fun calculateFare() {
-
-        if (searchedRoute.value != null && selectedCarModel.value != null) {
-            fare.value =
-                (searchedRoute.value!!.totalDistance * selectedCarModel.value!!.farePerKiloMeter).toString()
+        if (route != null && selectedCarModel.value != null) {
+            calculatedFare.value =
+                (route!!.totalDistance * selectedCarModel.value!!.farePerKiloMeter).toString()
         }
     }
+
 }

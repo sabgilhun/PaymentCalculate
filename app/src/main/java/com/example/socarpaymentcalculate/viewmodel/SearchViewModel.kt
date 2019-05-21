@@ -7,9 +7,14 @@ import com.example.socarpaymentcalculate.viewmodel.base.BaseViewModel
 
 class SearchViewModel(private val repository: TmapRepository) : BaseViewModel() {
 
-    val searchedPois = MutableLiveData<List<Poi>>()
+    private val searchedPois = MutableLiveData<List<Poi>>()
 
     fun searchPois(keyword: String) {
-
+        compositeDisposable.add(
+            repository
+                .getPois(keyword,
+                    { searchedPois.value = it },
+                    {})
+        )
     }
 }

@@ -17,6 +17,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
         super.onCreate(savedInstanceState)
 
         mapViewModel = getViewModel(MapViewModel::class.java)
+
         fareViewModel = getViewModel(FareViewModel::class.java)
 
     }

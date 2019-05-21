@@ -1,13 +1,14 @@
 package com.example.socarpaymentcalculate.viewmodel
 
 import androidx.lifecycle.MutableLiveData
+import com.example.socarpaymentcalculate.data.TmapRepository
 import com.example.socarpaymentcalculate.data.enum.CarModel
 import com.example.socarpaymentcalculate.data.enum.CarType
 import com.example.socarpaymentcalculate.data.model.Route
 import com.example.socarpaymentcalculate.viewmodel.base.BaseViewModel
 
 
-class FareViewModel : BaseViewModel() {
+class FareViewModel(private val repository: TmapRepository) : BaseViewModel() {
 
     private var route: Route? = null
 

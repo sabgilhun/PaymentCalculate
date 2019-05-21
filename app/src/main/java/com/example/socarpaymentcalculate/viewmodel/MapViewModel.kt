@@ -1,14 +1,14 @@
 package com.example.socarpaymentcalculate.viewmodel
 
 import androidx.lifecycle.MutableLiveData
+import com.example.socarpaymentcalculate.data.TmapRepository
 import com.example.socarpaymentcalculate.data.model.Coordinate
 import com.example.socarpaymentcalculate.data.model.CoordinateBlock
 import com.example.socarpaymentcalculate.data.model.Poi
 import com.example.socarpaymentcalculate.data.model.Route
-import com.example.socarpaymentcalculate.data.remote.TmapDataSourceImpl
 import com.example.socarpaymentcalculate.viewmodel.base.BaseViewModel
 
-class MapViewModel : BaseViewModel() {
+class MapViewModel(private val repository: TmapRepository) : BaseViewModel() {
 
     private val startPoint = MutableLiveData<Coordinate>()
 

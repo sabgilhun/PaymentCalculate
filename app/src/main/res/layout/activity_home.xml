@@ -40,7 +40,7 @@
 			android:onClick="onClickSearchTextBox"
 			android:paddingStart="8dp"
 			android:paddingEnd="8dp"
-			android:text="@{mapViewModel.departureName}"
+			android:text="@{mapViewModel.departurePointName}"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toTopOf="parent" />

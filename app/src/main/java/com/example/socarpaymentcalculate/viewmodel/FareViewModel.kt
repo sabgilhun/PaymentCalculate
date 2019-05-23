@@ -1,5 +1,6 @@
 package com.example.socarpaymentcalculate.viewmodel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.socarpaymentcalculate.data.TmapRepository
 import com.example.socarpaymentcalculate.data.enums.CarModel
@@ -12,17 +13,25 @@ class FareViewModel(private val repository: TmapRepository) : BaseViewModel() {
 
     private var route: Route? = null
 
-    private val calculatedFare = MutableLiveData<String>()
+    private val _calculatedFare = MutableLiveData<String>()
+    val calculatedFare: LiveData<String>
+        get() = _calculatedFare
 
-    private val selectedCarType = MutableLiveData<CarType>()
+    private val _selectedCarType = MutableLiveData<CarType>()
+    val selectedCarType: LiveData<CarType>
+        get() = _selectedCarType
 
-    private val carModelList = MutableLiveData<List<CarModel>>()
+    private val _carModelList = MutableLiveData<List<CarModel>>()
+    val carModelList: LiveData<List<CarModel>>
+        get() = _carModelList
 
-    private val selectedCarModel = MutableLiveData<CarModel>()
+    private val _selectedCarModel = MutableLiveData<CarModel>()
+    val selectedCarModel: LiveData<CarModel>
+        get() = _selectedCarModel
 
     fun onSeletedCarType(selectedCarType: CarType) {
-        this.selectedCarType.value = selectedCarType
-        carModelList.value =
+        _selectedCarType.value = selectedCarType
+        _carModelList.value =
             CarModel.values()
                 .filter {
                     it.type == selectedCarType
@@ -30,7 +39,7 @@ class FareViewModel(private val repository: TmapRepository) : BaseViewModel() {
     }
 
     fun onSelectedCarModel(selectedCarModel: CarModel) {
-        this.selectedCarModel.value = selectedCarModel
+        _selectedCarModel.value = selectedCarModel
         calculateFare()
     }
 
@@ -40,9 +49,9 @@ class FareViewModel(private val repository: TmapRepository) : BaseViewModel() {
     }
 
     private fun calculateFare() {
-        if (route != null && selectedCarModel.value != null) {
-            calculatedFare.value =
-                (route!!.totalDistance * selectedCarModel.value!!.farePerKiloMeter).toString()
+        if (route != null && _selectedCarModel.value != null) {
+            _calculatedFare.value =
+                (route!!.totalDistance * _selectedCarModel.value!!.farePerKiloMeter).toString()
         }
     }
 

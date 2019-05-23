@@ -17,8 +17,7 @@ object ViewModelFactory : ViewModelProvider.NewInstanceFactory() {
                 isAssignableFrom(SearchViewModel::class.java) ->
                     SearchViewModel(TmapRepositoryImpl)
                 else ->
-                    throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
+                    throw IllegalArgumentException("UnknownViewModelclass:${modelClass.name}")
             }
         } as T
-
 }

@@ -1,4 +1,4 @@
-package com.example.socarpaymentcalculate.data.enum
+package com.example.socarpaymentcalculate.data.enums
 
 enum class CarType {
     SUBCOMPACT,

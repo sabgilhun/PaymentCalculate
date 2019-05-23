@@ -6,6 +6,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
+import com.example.socarpaymentcalculate.viewmodel.ViewModelFactory
 
 abstract class BaseActivity<B : ViewDataBinding> constructor(
     private val layoutId: Int
@@ -21,7 +22,7 @@ abstract class BaseActivity<B : ViewDataBinding> constructor(
     }
 
     protected fun <VM : ViewModel> getViewModel(vmClass: Class<VM>): VM {
-        return ViewModelProviders.of(this).get(vmClass)
+        return ViewModelProviders.of(this, ViewModelFactory).get(vmClass)
     }
 
 }

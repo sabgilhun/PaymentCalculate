@@ -1,5 +1,7 @@
 package com.example.socarpaymentcalculate.data.model
 
+import android.os.Parcel
+import android.os.Parcelable
 import com.example.socarpaymentcalculate.data.remote.response.PoiSearchResponse
 
 data class Poi private constructor(
@@ -9,7 +11,27 @@ data class Poi private constructor(
     val longitude: Double,
     val oldAddressName: String,
     val newAddressName: String
-) {
+) : Parcelable {
+    constructor(source: Parcel) : this(
+        source.readString() ?: "",
+        source.readString() ?: "",
+        source.readDouble(),
+        source.readDouble(),
+        source.readString() ?: "",
+        source.readString() ?: ""
+    )
+
+    override fun describeContents() = 0
+
+    override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
+        writeString(id)
+        writeString(name)
+        writeDouble(latitude)
+        writeDouble(longitude)
+        writeString(oldAddressName)
+        writeString(newAddressName)
+    }
+
     companion object {
         fun from(poiSearchResponse: PoiSearchResponse.SearchPoiInfo.Pois.Poi): Poi {
 
@@ -36,5 +58,10 @@ data class Poi private constructor(
             )
         }
 
+        @JvmField
+        val CREATOR: Parcelable.Creator<Poi> = object : Parcelable.Creator<Poi> {
+            override fun createFromParcel(source: Parcel): Poi = Poi(source)
+            override fun newArray(size: Int): Array<Poi?> = arrayOfNulls(size)
+        }
     }
 }

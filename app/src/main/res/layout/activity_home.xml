@@ -3,7 +3,14 @@
 	xmlns:app="http://schemas.android.com/apk/res-auto">
 	
 	<data>
-	
+		
+		<variable
+			name="fareViewModel"
+			type="com.example.socarpaymentcalculate.viewmodel.FareViewModel" />
+		
+		<variable
+			name="mapViewModel"
+			type="com.example.socarpaymentcalculate.viewmodel.MapViewModel" />
 	</data>
 	
 	
@@ -11,27 +18,49 @@
 		android:layout_width="match_parent"
 		android:layout_height="match_parent">
 		
-		<Button
-			android:id="@+id/poi"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:text="poi"
-			app:layout_constraintBottom_toTopOf="@+id/route"
+		<fragment
+			android:id="@+id/fl_map_container"
+			android:name="com.google.android.gms.maps.MapFragment"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintHorizontal_bias="0.5"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toTopOf="parent" />
 		
-		<Button
-			android:id="@+id/route"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:text="route"
-			app:layout_constraintBottom_toBottomOf="parent"
+		<TextView
+			android:id="@+id/tv_departure"
+			android:layout_width="match_parent"
+			android:layout_height="40dp"
+			android:layout_marginStart="16dp"
+			android:layout_marginTop="8dp"
+			android:layout_marginEnd="16dp"
+			android:background="@drawable/shape_round_border_white"
+			android:gravity="center_vertical"
+			android:onClick="onClickSearchTextBox"
+			android:paddingStart="8dp"
+			android:paddingEnd="8dp"
+			android:text="출발 위치 검색"
 			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintHorizontal_bias="0.5"
 			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@+id/poi" />
+			app:layout_constraintTop_toTopOf="parent" />
+		
+		<TextView
+			android:id="@+id/tv_destination"
+			android:layout_width="match_parent"
+			android:layout_height="40dp"
+			android:layout_marginStart="16dp"
+			android:layout_marginTop="8dp"
+			android:layout_marginEnd="16dp"
+			android:background="@drawable/shape_round_border_white"
+			android:gravity="center_vertical"
+			android:onClick="onClickSearchTextBox"
+			android:paddingStart="8dp"
+			android:paddingEnd="8dp"
+			android:text="도착 위치 검색"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/tv_departure" />
 	
 	</androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

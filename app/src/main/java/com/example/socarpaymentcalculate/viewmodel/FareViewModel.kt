@@ -2,8 +2,8 @@ package com.example.socarpaymentcalculate.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import com.example.socarpaymentcalculate.data.TmapRepository
-import com.example.socarpaymentcalculate.data.enum.CarModel
-import com.example.socarpaymentcalculate.data.enum.CarType
+import com.example.socarpaymentcalculate.data.enums.CarModel
+import com.example.socarpaymentcalculate.data.enums.CarType
 import com.example.socarpaymentcalculate.data.model.Route
 import com.example.socarpaymentcalculate.viewmodel.base.BaseViewModel
 

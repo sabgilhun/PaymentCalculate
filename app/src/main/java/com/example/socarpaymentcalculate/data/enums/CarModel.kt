@@ -1,8 +1,8 @@
-package com.example.socarpaymentcalculate.data.enum
+package com.example.socarpaymentcalculate.data.enums
 
 import androidx.annotation.IdRes
 import com.example.socarpaymentcalculate.R
-import com.example.socarpaymentcalculate.data.enum.CarType.*
+import com.example.socarpaymentcalculate.data.enums.CarType.*
 
 enum class CarModel(val type: CarType, @IdRes val nameRes: Int, val farePerKiloMeter: Int) {
 

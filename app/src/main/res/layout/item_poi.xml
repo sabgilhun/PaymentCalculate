@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+	
+	<data>
+		
+		<variable
+			name="item"
+			type="com.example.socarpaymentcalculate.data.model.Poi" />
+	</data>
+	
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="60dp"
+		android:layout_margin="8dp"
+		android:orientation="vertical">
+		
+		<TextView
+			android:id="@+id/tv_poi_name"
+			android:textStyle="bold"
+			android:layout_width="match_parent"
+			android:layout_height="0dp"
+			android:layout_weight="5"
+			android:gravity="center_vertical"
+			android:paddingStart="4dp"
+			android:paddingEnd="4dp"
+			android:text="@{item.name}"
+			android:textSize="14sp" />
+		
+		<TextView
+			android:id="@+id/tv_new_address"
+			android:layout_width="match_parent"
+			android:layout_height="0dp"
+			android:layout_weight="2.5"
+			android:gravity="center_vertical"
+			android:paddingStart="4dp"
+			android:paddingEnd="4dp"
+			android:text="@{item.newAddressName}"
+			android:textSize="12sp" />
+		
+		<TextView
+			android:id="@+id/tv_old_address"
+			android:layout_width="match_parent"
+			android:layout_height="0dp"
+			android:layout_weight="2.5"
+			android:gravity="center_vertical"
+			android:paddingStart="4dp"
+			android:paddingEnd="4dp"
+			android:text="@{item.oldAddressName}"
+			android:textSize="12sp" />
+	
+	</LinearLayout>
+</layout>

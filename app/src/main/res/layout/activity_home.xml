@@ -40,7 +40,7 @@
 			android:onClick="onClickSearchTextBox"
 			android:paddingStart="8dp"
 			android:paddingEnd="8dp"
-			android:text="출발 위치 검색"
+			android:text="@{mapViewModel.departureName}"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toTopOf="parent" />
@@ -57,7 +57,7 @@
 			android:onClick="onClickSearchTextBox"
 			android:paddingStart="8dp"
 			android:paddingEnd="8dp"
-			android:text="도착 위치 검색"
+			android:text="@{mapViewModel.destinationName}"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toBottomOf="@id/tv_departure" />

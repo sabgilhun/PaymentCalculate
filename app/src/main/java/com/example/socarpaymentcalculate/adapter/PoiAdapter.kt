@@ -7,7 +7,9 @@ import androidx.recyclerview.widget.ListAdapter
 import com.example.socarpaymentcalculate.R
 import com.example.socarpaymentcalculate.data.model.Poi
 
-class PoiAdapter : ListAdapter<Poi, PoiViewHolder>(DIFF_CALLBACK) {
+class PoiAdapter(
+    private val onItemClickListener: ((item: Poi) -> Unit)?
+) : ListAdapter<Poi, PoiViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = PoiViewHolder(
         LayoutInflater.from(parent.context).inflate(R.layout.item_poi, parent, false)
@@ -16,6 +18,10 @@ class PoiAdapter : ListAdapter<Poi, PoiViewHolder>(DIFF_CALLBACK) {
     override fun onBindViewHolder(holder: PoiViewHolder, position: Int) {
         holder.binding.item = getItem(position)
         holder.binding.executePendingBindings()
+
+        holder.itemView.setOnClickListener {
+            onItemClickListener?.invoke(getItem(position))
+        }
     }
 
     companion object {
@@ -29,4 +35,5 @@ class PoiAdapter : ListAdapter<Poi, PoiViewHolder>(DIFF_CALLBACK) {
             }
         }
     }
+
 }

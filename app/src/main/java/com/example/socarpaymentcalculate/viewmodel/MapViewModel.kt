@@ -20,27 +20,35 @@ class MapViewModel(private val repository: TmapRepository) : BaseViewModel() {
 
     private val routes = MutableLiveData<List<Coordinate>>()
 
-    private val departurePoi = MutableLiveData<Poi>()
+    private var departure: Poi? = null
 
-    private val destinationPoi = MutableLiveData<Poi>()
+    private var destination: Poi? = null
+
+    val departureName = MutableLiveData<String>()
+
+    val destinationName = MutableLiveData<String>()
 
     fun onClickSearch() {
-        val departure = departurePoi.value ?: return
-        val destination = destinationPoi.value ?: return
+        val departure = this.departure
+        val destination = this.destination
 
-        compositeDisposable.add(
-            repository.getRoutes(departure, destination,
-                { calculateMapData(it) },
-                {})
-        )
+        if (departure != null && destination != null) {
+            compositeDisposable.add(
+                repository.getRoutes(departure, destination,
+                    { calculateMapData(it) },
+                    {})
+            )
+        }
     }
 
     fun setDeparture(departure: Poi) {
-        departurePoi.value = departure
+        this.departure = departure
+        departureName.value = departure.name
     }
 
     fun setDestination(destination: Poi) {
-        destinationPoi.value = destination
+        this.destination = destination
+        destinationName.value = destination.name
     }
 
     private fun calculateMapData(route: Route) {

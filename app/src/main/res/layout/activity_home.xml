@@ -18,18 +18,22 @@
 		android:layout_width="match_parent"
 		android:layout_height="match_parent">
 		
-		<com.example.socarpaymentcalculate.view.custom.GoogleMapView
+		<com.example.socarpaymentcalculate.view.custom.NavigationGoogleMapView
 			android:id="@+id/map_view"
 			android:layout_width="0dp"
 			android:layout_height="0dp"
+			app:camera_focus="@{mapViewModel.mapFocus}"
+			app:departurePointMarkerIcon="@drawable/ic_room_black_24dp"
 			app:departure_point="@{mapViewModel.departurePointMarkerPosition}"
 			app:destination="@{mapViewModel.destinationMarkerPosition}"
-			app:camera_focus="@{mapViewModel.mapFocus}"
-			app:route="@{mapViewModel.route}"
+			app:destinationMarkerIcon="@drawable/ic_room_black_24dp"
 			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toTopOf="parent" />
+			app:layout_constraintTop_toTopOf="parent"
+			app:polylineColor="@color/colorPrimary"
+			app:polylineWith="4dp"
+			app:route="@{mapViewModel.route}" />
 		
 		<TextView
 			android:id="@+id/tv_departure"
@@ -66,9 +70,9 @@
 			app:layout_constraintTop_toBottomOf="@id/tv_departure" />
 		
 		<Button
-			android:onClick="@{() -> mapViewModel.onClickSearch()}"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
+			android:onClick="@{() -> mapViewModel.onClickSearch()}"
 			android:text="검색"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"

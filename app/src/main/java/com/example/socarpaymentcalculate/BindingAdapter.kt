@@ -4,8 +4,7 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.socarpaymentcalculate.adapter.PoiAdapter
 import com.example.socarpaymentcalculate.data.model.Poi
-import com.example.socarpaymentcalculate.view.custom.GoogleMapView
-import com.google.android.gms.maps.CameraUpdateFactory
+import com.example.socarpaymentcalculate.view.custom.NavigationGoogleMapView
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 
@@ -20,7 +19,7 @@ object BindingAdapter {
 
     @BindingAdapter("departure_point")
     @JvmStatic
-    fun setDeparturePointMarker(view: GoogleMapView, latLng: LatLng?) {
+    fun setDeparturePointMarker(view: NavigationGoogleMapView, latLng: LatLng?) {
         latLng?.let {
             view.setDeparturePointMarker(latLng)
         }
@@ -28,7 +27,7 @@ object BindingAdapter {
 
     @BindingAdapter("destination")
     @JvmStatic
-    fun setDestination(view: GoogleMapView, latLng: LatLng?) {
+    fun setDestination(view: NavigationGoogleMapView, latLng: LatLng?) {
         latLng?.let {
             view.setDestinationMarker(latLng)
         }
@@ -36,15 +35,15 @@ object BindingAdapter {
 
     @BindingAdapter("camera_focus")
     @JvmStatic
-    fun setCameraPosition(view: GoogleMapView, latLngBounds: LatLngBounds?) {
+    fun setCameraPosition(view: NavigationGoogleMapView, latLngBounds: LatLngBounds?) {
         latLngBounds?.let {
-            view.googleMap?.animateCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds, 300))
+            view.setCameraFocus(latLngBounds)
         }
     }
 
     @BindingAdapter("route")
     @JvmStatic
-    fun setRoutePolyline(view: GoogleMapView, route: List<LatLng>?) {
+    fun setRoutePolyline(view: NavigationGoogleMapView, route: List<LatLng>?) {
         route?.let {
             view.setRoutePolyline(route)
         }

@@ -13,10 +13,8 @@ import com.example.socarpaymentcalculate.databinding.ActivityHomeBinding
 import com.example.socarpaymentcalculate.view.base.BaseActivity
 import com.example.socarpaymentcalculate.viewmodel.FareViewModel
 import com.example.socarpaymentcalculate.viewmodel.MapViewModel
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
 
-class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home), OnMapReadyCallback {
+class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,9 +23,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home), 
 
         binding.fareViewModel = getViewModel(FareViewModel::class.java)
 
-    }
-
-    override fun onMapReady(map: GoogleMap?) {
     }
 
     fun onClickSearchTextBox(view: View) {

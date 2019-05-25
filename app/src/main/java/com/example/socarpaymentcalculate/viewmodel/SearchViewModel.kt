@@ -20,9 +20,9 @@ class SearchViewModel(private val repository: TmapRepository) : BaseViewModel() 
         if (!keyword.isNullOrBlank()) {
             compositeDisposable.add(
                 repository
-                    .getPois(keyword,
-                        { _searchedPois.value = it },
-                        {})
+                    .getPois(keyword, {
+                        _searchedPois.value = it
+                    }, {})
             )
         }
     }

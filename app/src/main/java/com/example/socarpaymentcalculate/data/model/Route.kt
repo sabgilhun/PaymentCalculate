@@ -1,12 +1,13 @@
 package com.example.socarpaymentcalculate.data.model
 
 import com.example.socarpaymentcalculate.data.remote.response.RouteSearchResponse
+import com.google.android.gms.maps.model.LatLng
 
 data class Route private constructor(
     val totalDistance: Int,
     val totalTime: Int,
     val expectedTaxiFare: Int,
-    val coordinates: List<Coordinate>
+    val coordinates: List<LatLng>
 
 ) {
 
@@ -27,7 +28,7 @@ data class Route private constructor(
                     .map {
                         it.geometry.coordinates.map { coordinate ->
                             val res = coordinate as ArrayList<*>
-                            Coordinate.with(res[0] as Double, res[1] as Double)
+                            LatLngFactory.with(res[1] as Double, res[0] as Double)
                         }.toMutableList()
                     }.reduce { acc, mutableList ->
                         acc.addAll(mutableList)

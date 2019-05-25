@@ -3,11 +3,12 @@ package com.example.socarpaymentcalculate.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.socarpaymentcalculate.data.TmapRepository
-import com.example.socarpaymentcalculate.data.model.Coordinate
-import com.example.socarpaymentcalculate.data.model.CoordinateBlock
+import com.example.socarpaymentcalculate.data.model.LatLngFactory
 import com.example.socarpaymentcalculate.data.model.Poi
 import com.example.socarpaymentcalculate.data.model.Route
 import com.example.socarpaymentcalculate.viewmodel.base.BaseViewModel
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.LatLngBounds
 
 class MapViewModel(private val repository: TmapRepository) : BaseViewModel() {
 
@@ -15,25 +16,25 @@ class MapViewModel(private val repository: TmapRepository) : BaseViewModel() {
 
     private var destination: Poi? = null
 
-    private val _startPoint = MutableLiveData<Coordinate>()
-    val startPoint: LiveData<Coordinate>
-        get() = _startPoint
+    private val _departurePointMarkerPosition = MutableLiveData<LatLng>()
+    val departurePointMarkerPosition: LiveData<LatLng>
+        get() = _departurePointMarkerPosition
 
-    private val _endPoint = MutableLiveData<Coordinate>()
-    val endPoint: LiveData<Coordinate>
-        get() = _endPoint
+    private val _destinationMarkerPosition = MutableLiveData<LatLng>()
+    val destinationMarkerPosition: LiveData<LatLng>
+        get() = _destinationMarkerPosition
 
-    private val _centerPoint = MutableLiveData<Coordinate>()
-    val centerPoint: LiveData<Coordinate>
+    private val _centerPoint = MutableLiveData<LatLng>()
+    val centerPoint: LiveData<LatLng>
         get() = _centerPoint
 
-    private val _mapFocus = MutableLiveData<CoordinateBlock>()
-    val mapFocus: LiveData<CoordinateBlock>
+    private val _mapFocus = MutableLiveData<LatLngBounds>()
+    val mapFocus: LiveData<LatLngBounds>
         get() = _mapFocus
 
-    private val _routes = MutableLiveData<List<Coordinate>>()
-    val routes: LiveData<List<Coordinate>>
-        get() = _routes
+    private val _route = MutableLiveData<List<LatLng>>()
+    val route: LiveData<List<LatLng>>
+        get() = _route
 
     private val _departurePointName = MutableLiveData<String>()
     val departurePointName: LiveData<String>
@@ -49,8 +50,9 @@ class MapViewModel(private val repository: TmapRepository) : BaseViewModel() {
 
         if (departure != null && destination != null) {
             compositeDisposable.add(
-                repository.getRoutes(departure, destination,
-                    { calculateMapData(it) },
+                repository.getRoutes(departure, destination, {
+                        calculateMapData(it)
+                    },
                     {})
             )
         }
@@ -68,16 +70,16 @@ class MapViewModel(private val repository: TmapRepository) : BaseViewModel() {
 
     private fun calculateMapData(route: Route) {
         if (route.coordinates.isNotEmpty()) {
-            val leftTop = Coordinate.leftTop(route.coordinates)
-            val rightBottom = Coordinate.rightBottom(route.coordinates)
+            val leftTop = LatLngFactory.leftTop(route.coordinates)
+            val rightBottom = LatLngFactory.rightBottom(route.coordinates)
 
-            _startPoint.value = route.coordinates.first()
-            _endPoint.value = route.coordinates.last()
+            _departurePointMarkerPosition.value = route.coordinates.first()
+            _destinationMarkerPosition.value = route.coordinates.last()
 
-            _centerPoint.value = Coordinate.center(leftTop!!, rightBottom!!)
-            _mapFocus.value = CoordinateBlock.with(leftTop, rightBottom)
+            _centerPoint.value = LatLngFactory.center(leftTop!!, rightBottom!!)
+            _mapFocus.value = LatLngBounds(leftTop, rightBottom)
 
-            _routes.value = route.coordinates
+            _route.value = route.coordinates
         }
 
     }

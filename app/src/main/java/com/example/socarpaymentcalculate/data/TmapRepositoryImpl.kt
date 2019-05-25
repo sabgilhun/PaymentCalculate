@@ -17,7 +17,6 @@ object TmapRepositoryImpl : TmapRepository {
         success: (List<Poi>) -> Unit,
         fail: (String) -> Unit
     ): Disposable {
-
         return dataSource
             .getPois(keyword)
             .subscribeOn(Schedulers.io())

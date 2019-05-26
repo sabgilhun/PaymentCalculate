@@ -80,7 +80,11 @@ class NavigationGoogleMapView @JvmOverloads constructor(
     fun setRoutePolyline(route: List<LatLng>) {
         routePolyline = routePolyline?.apply {
             points = route
-        } ?: googleMap?.addPolyline(PolylineOptions().addAll(route))
+        } ?: googleMap?.addPolyline(PolylineOptions().apply {
+            addAll(route)
+            color(polylineColor)
+            width(polylineWith.toFloat())
+        })
     }
 
     fun setCameraFocus(latLngBounds: LatLngBounds?) {

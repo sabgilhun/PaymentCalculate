@@ -12,7 +12,7 @@ import com.google.android.gms.maps.model.LatLngBounds
 
 class MapViewModel(private val repository: TmapRepository) : BaseViewModel() {
 
-    private var departure: Poi? = null
+    private var departurePoint: Poi? = null
 
     private var destination: Poi? = null
 
@@ -23,10 +23,6 @@ class MapViewModel(private val repository: TmapRepository) : BaseViewModel() {
     private val _destinationMarkerPosition = MutableLiveData<LatLng>()
     val destinationMarkerPosition: LiveData<LatLng>
         get() = _destinationMarkerPosition
-
-    private val _centerPoint = MutableLiveData<LatLng>()
-    val centerPoint: LiveData<LatLng>
-        get() = _centerPoint
 
     private val _mapFocus = MutableLiveData<LatLngBounds>()
     val mapFocus: LiveData<LatLngBounds>
@@ -45,21 +41,19 @@ class MapViewModel(private val repository: TmapRepository) : BaseViewModel() {
         get() = _destinationName
 
     fun onClickSearch() {
-        val departure = this.departure
-        val destination = this.destination
-
-        if (departure != null && destination != null) {
-            compositeDisposable.add(
-                repository.getRoutes(departure, destination, {
+        departurePoint?.let { departurePoint ->
+            destination?.let { destination ->
+                compositeDisposable.add(
+                    repository.getRoutes(departurePoint, destination, {
                         calculateMapData(it)
-                    },
-                    {})
-            )
+                    }, {})
+                )
+            }
         }
     }
 
     fun setDeparture(departurePoint: Poi) {
-        this.departure = departurePoint
+        this.departurePoint = departurePoint
         _departurePointName.value = departurePoint.name
     }
 
@@ -70,14 +64,14 @@ class MapViewModel(private val repository: TmapRepository) : BaseViewModel() {
 
     private fun calculateMapData(route: Route) {
         if (route.coordinates.isNotEmpty()) {
-            val leftTop = LatLngFactory.leftTop(route.coordinates)
-            val rightBottom = LatLngFactory.rightBottom(route.coordinates)
 
             _departurePointMarkerPosition.value = route.coordinates.first()
             _destinationMarkerPosition.value = route.coordinates.last()
 
-            _centerPoint.value = LatLngFactory.center(leftTop!!, rightBottom!!)
-            _mapFocus.value = LatLngBounds(leftTop, rightBottom)
+            _mapFocus.value = LatLngBounds(
+                LatLngFactory.leftTop(route.coordinates),
+                LatLngFactory.rightBottom(route.coordinates)
+            )
 
             _route.value = route.coordinates
         }

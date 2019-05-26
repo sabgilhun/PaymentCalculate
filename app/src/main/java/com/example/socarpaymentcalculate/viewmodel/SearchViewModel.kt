@@ -15,13 +15,11 @@ class SearchViewModel(private val repository: TmapRepository) : BaseViewModel() 
     val keyword = MutableLiveData<String>()
 
     fun searchPois() {
-        val keyword = keyword.value
-
-        if (!keyword.isNullOrBlank()) {
+        keyword.value?.let {
             compositeDisposable.add(
                 repository
-                    .getPois(keyword, {
-                        _searchedPois.value = it
+                    .getPois(it, { result ->
+                        _searchedPois.value = result
                     }, {})
             )
         }

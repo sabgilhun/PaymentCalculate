@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.socarpaymentcalculate.Constants.EXTRA_POI
@@ -13,6 +14,7 @@ import com.example.socarpaymentcalculate.R
 import com.example.socarpaymentcalculate.adapter.CarModelAdapter
 import com.example.socarpaymentcalculate.adapter.CarTypeAdapter
 import com.example.socarpaymentcalculate.data.model.Poi
+import com.example.socarpaymentcalculate.data.model.Route
 import com.example.socarpaymentcalculate.databinding.ActivityHomeBinding
 import com.example.socarpaymentcalculate.view.base.BaseActivity
 import com.example.socarpaymentcalculate.viewmodel.FareViewModel
@@ -33,7 +35,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
             binding.rvCarType.addItemDecoration(DividerItemDecoration(applicationContext, it.orientation))
         }
 
-        binding.rvCarType.adapter = CarTypeAdapter(applicationContext, null)
+        binding.rvCarType.adapter = CarTypeAdapter(applicationContext) {
+            binding.fareViewModel?.onSelectCarType(it)
+        }
 
         LinearLayoutManager(applicationContext).also {
             it.orientation = LinearLayoutManager.HORIZONTAL
@@ -41,7 +45,14 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
             binding.rvCarModel.addItemDecoration(DividerItemDecoration(applicationContext, it.orientation))
         }
 
-        binding.rvCarModel.adapter = CarModelAdapter(applicationContext, null)
+        binding.rvCarModel.adapter = CarModelAdapter(applicationContext) {
+            binding.fareViewModel?.onSelectCarModel(it)
+        }
+
+        binding.mapViewModel?.route?.observe(this, Observer<Route> {
+            binding.fareViewModel?.setRoute(it)
+        })
+
     }
 
     fun onClickSearchTextBox(view: View) {

@@ -28,8 +28,8 @@ class MapViewModel(private val repository: TmapRepository) : BaseViewModel() {
     val mapFocus: LiveData<LatLngBounds>
         get() = _mapFocus
 
-    private val _route = MutableLiveData<List<LatLng>>()
-    val route: LiveData<List<LatLng>>
+    private val _route = MutableLiveData<Route>()
+    val route: LiveData<Route>
         get() = _route
 
     private val _departurePointName = MutableLiveData<String>()
@@ -73,7 +73,7 @@ class MapViewModel(private val repository: TmapRepository) : BaseViewModel() {
                 LatLngFactory.rightBottom(route.coordinates)
             )
 
-            _route.value = route.coordinates
+            _route.value = route
         }
 
     }

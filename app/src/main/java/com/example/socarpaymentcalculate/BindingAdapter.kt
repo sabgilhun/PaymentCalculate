@@ -8,6 +8,7 @@ import com.example.socarpaymentcalculate.adapter.PoiAdapter
 import com.example.socarpaymentcalculate.data.enums.CarModel
 import com.example.socarpaymentcalculate.data.enums.CarType
 import com.example.socarpaymentcalculate.data.model.Poi
+import com.example.socarpaymentcalculate.data.model.Route
 import com.example.socarpaymentcalculate.view.custom.NavigationGoogleMapView
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
@@ -63,9 +64,9 @@ object BindingAdapter {
 
     @BindingAdapter("route")
     @JvmStatic
-    fun setRoutePolyline(view: NavigationGoogleMapView, route: List<LatLng>?) {
+    fun setRoutePolyline(view: NavigationGoogleMapView, route: Route?) {
         route?.let {
-            view.setRoutePolyline(route)
+            view.setRoutePolyline(route.coordinates)
         }
     }
 }

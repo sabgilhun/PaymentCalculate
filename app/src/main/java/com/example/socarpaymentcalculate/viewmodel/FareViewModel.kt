@@ -21,6 +21,10 @@ class FareViewModel(private val repository: TmapRepository) : BaseViewModel() {
     val selectedCarType: LiveData<CarType>
         get() = _selectedCarType
 
+    private val _carTypeList = MutableLiveData<List<CarType>>()
+    val carTypeList: LiveData<List<CarType>>
+        get() = _carTypeList
+
     private val _carModelList = MutableLiveData<List<CarModel>>()
     val carModelList: LiveData<List<CarModel>>
         get() = _carModelList
@@ -28,6 +32,10 @@ class FareViewModel(private val repository: TmapRepository) : BaseViewModel() {
     private val _selectedCarModel = MutableLiveData<CarModel>()
     val selectedCarModel: LiveData<CarModel>
         get() = _selectedCarModel
+
+    init {
+        _carTypeList.value = CarType.values().toList()
+    }
 
     fun onSeletedCarType(selectedCarType: CarType) {
         _selectedCarType.value = selectedCarType

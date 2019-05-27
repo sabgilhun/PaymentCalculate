@@ -1,6 +1,19 @@
 <resources>
 	<string name="app_name">SocarPaymentCalculate</string>
 	
+	<string name="subcompact">경형</string>
+	<string name="compact">소형</string>
+	<string name="semi_midsize">준중형</string>
+	<string name="electric_vehicle">EV</string>
+	<string name="midsize">중형</string>
+	<string name="semi_fullsize">준대형</string>
+	<string name="fullsize">대형</string>
+	<string name="compact_suv">소형 SUV</string>
+	<string name="semi_midsize_suv">준중형 SUV</string>
+	<string name="midsize_suv">중형 SUV</string>
+	<string name="van">승합</string>
+	<string name="high_class">수입</string>
+	
 	
 	<string name="all_new_morning">올뉴모닝</string>
 	<string name="next_spark">넥스트스파크</string>

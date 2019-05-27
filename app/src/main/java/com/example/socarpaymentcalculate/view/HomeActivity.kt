@@ -4,10 +4,14 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.socarpaymentcalculate.Constants.EXTRA_POI
 import com.example.socarpaymentcalculate.Constants.EXTRA_VIEW_ID
 import com.example.socarpaymentcalculate.Constants.REQUEST_CODE_HOME_TO_SEARCH
 import com.example.socarpaymentcalculate.R
+import com.example.socarpaymentcalculate.adapter.CarModelAdapter
+import com.example.socarpaymentcalculate.adapter.CarTypeAdapter
 import com.example.socarpaymentcalculate.data.model.Poi
 import com.example.socarpaymentcalculate.databinding.ActivityHomeBinding
 import com.example.socarpaymentcalculate.view.base.BaseActivity
@@ -23,6 +27,21 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
         binding.fareViewModel = getViewModel(FareViewModel::class.java)
 
+        LinearLayoutManager(applicationContext).also {
+            it.orientation = LinearLayoutManager.HORIZONTAL
+            binding.rvCarType.layoutManager = it
+            binding.rvCarType.addItemDecoration(DividerItemDecoration(applicationContext, it.orientation))
+        }
+
+        binding.rvCarType.adapter = CarTypeAdapter(applicationContext, null)
+
+        LinearLayoutManager(applicationContext).also {
+            it.orientation = LinearLayoutManager.HORIZONTAL
+            binding.rvCarModel.layoutManager = it
+            binding.rvCarModel.addItemDecoration(DividerItemDecoration(applicationContext, it.orientation))
+        }
+
+        binding.rvCarModel.adapter = CarModelAdapter(applicationContext, null)
     }
 
     fun onClickSearchTextBox(view: View) {

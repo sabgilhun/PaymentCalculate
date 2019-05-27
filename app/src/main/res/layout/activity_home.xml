@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res-auto">
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tool="http://schemas.android.com/tools">
 	
 	<data>
 		
@@ -13,71 +14,134 @@
 			type="com.example.socarpaymentcalculate.viewmodel.MapViewModel" />
 	</data>
 	
-	
-	<androidx.constraintlayout.widget.ConstraintLayout
+	<androidx.coordinatorlayout.widget.CoordinatorLayout
 		android:layout_width="match_parent"
 		android:layout_height="match_parent">
 		
-		<com.example.socarpaymentcalculate.view.custom.NavigationGoogleMapView
-			android:id="@+id/map_view"
-			android:layout_width="0dp"
-			android:layout_height="0dp"
-			app:camera_focus="@{mapViewModel.mapFocus}"
-			app:departurePointMarkerIcon="@drawable/map_marker_start"
-			app:departure_point="@{mapViewModel.departurePointMarkerPosition}"
-			app:destination="@{mapViewModel.destinationMarkerPosition}"
-			app:destinationMarkerIcon="@drawable/map_marker_end"
-			app:layout_constraintBottom_toBottomOf="parent"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toTopOf="parent"
-			app:polylineColor="@color/colorPrimary"
-			app:polylineWith="4dp"
-			app:route="@{mapViewModel.route}" />
-		
-		<TextView
-			android:id="@+id/tv_departure"
+		<androidx.constraintlayout.widget.ConstraintLayout
 			android:layout_width="match_parent"
-			android:layout_height="40dp"
-			android:layout_marginStart="16dp"
-			android:layout_marginTop="8dp"
-			android:layout_marginEnd="16dp"
-			android:background="@drawable/shape_round_border_white"
-			android:gravity="center_vertical"
-			android:onClick="onClickSearchTextBox"
-			android:paddingStart="8dp"
-			android:paddingEnd="8dp"
-			android:text="@{mapViewModel.departurePointName}"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toTopOf="parent" />
+			android:layout_height="match_parent">
+			
+			<com.example.socarpaymentcalculate.view.custom.NavigationGoogleMapView
+				android:id="@+id/map_view"
+				android:layout_width="0dp"
+				android:layout_height="0dp"
+				app:camera_focus="@{mapViewModel.mapFocus}"
+				app:departurePointMarkerIcon="@drawable/map_marker_start"
+				app:departure_point="@{mapViewModel.departurePointMarkerPosition}"
+				app:destination="@{mapViewModel.destinationMarkerPosition}"
+				app:destinationMarkerIcon="@drawable/map_marker_end"
+				app:layout_constraintBottom_toBottomOf="parent"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintHorizontal_bias="1.0"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="parent"
+				app:layout_constraintVertical_bias="0.0"
+				app:polylineColor="@color/colorPrimary"
+				app:polylineWith="4dp"
+				app:route="@{mapViewModel.route}" />
+			
+			<TextView
+				android:id="@+id/tv_departure"
+				android:layout_width="match_parent"
+				android:layout_height="40dp"
+				android:layout_marginStart="16dp"
+				android:layout_marginTop="8dp"
+				android:layout_marginEnd="16dp"
+				android:background="@drawable/shape_round_border_white"
+				android:gravity="center_vertical"
+				android:onClick="onClickSearchTextBox"
+				android:paddingStart="8dp"
+				android:paddingEnd="8dp"
+				android:text="@{mapViewModel.departurePointName}"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="parent" />
+			
+			<TextView
+				android:id="@+id/tv_destination"
+				android:layout_width="match_parent"
+				android:layout_height="40dp"
+				android:layout_marginStart="16dp"
+				android:layout_marginTop="8dp"
+				android:layout_marginEnd="16dp"
+				android:background="@drawable/shape_round_border_white"
+				android:gravity="center_vertical"
+				android:onClick="onClickSearchTextBox"
+				android:paddingStart="8dp"
+				android:paddingEnd="8dp"
+				android:text="@{mapViewModel.destinationName}"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/tv_departure" />
+			
+			<Button
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:onClick="@{() -> mapViewModel.onClickSearch()}"
+				android:text="검색"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/tv_destination" />
 		
-		<TextView
-			android:id="@+id/tv_destination"
+		</androidx.constraintlayout.widget.ConstraintLayout>
+		
+		<androidx.constraintlayout.widget.ConstraintLayout
+			android:id="@+id/cl_bottom_sheet"
 			android:layout_width="match_parent"
-			android:layout_height="40dp"
-			android:layout_marginStart="16dp"
-			android:layout_marginTop="8dp"
-			android:layout_marginEnd="16dp"
+			android:layout_height="300dp"
+			android:layout_margin="8dp"
 			android:background="@drawable/shape_round_border_white"
-			android:gravity="center_vertical"
-			android:onClick="onClickSearchTextBox"
-			android:paddingStart="8dp"
-			android:paddingEnd="8dp"
-			android:text="@{mapViewModel.destinationName}"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@id/tv_departure" />
+			app:behavior_peekHeight="60dp"
+			app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+			
+			<TextView
+				android:id="@+id/tv_title"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_margin="8dp"
+				android:gravity="center_horizontal"
+				android:text="요금표"
+				android:textSize="24sp"
+				android:textStyle="bold"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="parent" />
+			
+			<androidx.recyclerview.widget.RecyclerView
+				android:id="@+id/rv_car_type"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="8dp"
+				app:item_car_type="@{fareViewModel.carTypeList}"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/tv_title" />
+			
+			<androidx.recyclerview.widget.RecyclerView
+				android:id="@+id/rv_car_model"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="8dp"
+				app:item_car_model="@{fareViewModel.carModelList}"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/rv_car_type" />
+			
+			<TextView
+				android:id="@+id/tv_fare"
+				android:layout_width="wrap_content"
+				android:layout_height="0dp"
+				android:gravity="center_vertical"
+				android:textSize="24sp"
+				app:layout_constraintBottom_toBottomOf="parent"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/rv_car_model"
+				tool:text="30000원" />
 		
-		<Button
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:onClick="@{() -> mapViewModel.onClickSearch()}"
-			android:text="검색"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@id/tv_destination" />
+		</androidx.constraintlayout.widget.ConstraintLayout>
 	
-	</androidx.constraintlayout.widget.ConstraintLayout>
+	</androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
 

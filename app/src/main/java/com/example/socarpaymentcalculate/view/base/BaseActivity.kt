@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
 import com.example.socarpaymentcalculate.common.RxLifecycleHandler
 import com.example.socarpaymentcalculate.viewmodel.ViewModelFactory
-import io.reactivex.Flowable
+import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
@@ -39,7 +39,7 @@ abstract class BaseActivity<B : ViewDataBinding> constructor(
         compositeDisposable.add(this)
     }
 
-    protected fun <T> Flowable<T>.observe(o: (T) -> Unit) {
+    protected fun <T> Observable<T>.observe(o: (T) -> Unit) {
         RxLifecycleHandler(this@BaseActivity, this, o)
     }
 

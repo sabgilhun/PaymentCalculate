@@ -3,6 +3,7 @@ package com.example.socarpaymentcalculate.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.socarpaymentcalculate.data.TmapRepositoryImpl
+import com.example.socarpaymentcalculate.viewmodel.search.SearchViewModel
 
 object ViewModelFactory : ViewModelProvider.NewInstanceFactory() {
 

@@ -4,9 +4,13 @@
 	
 	<data>
 		
+		<import type="java.util.List" />
+		
+		<import type="com.example.socarpaymentcalculate.data.model.Poi" />
+		
 		<variable
-			name="searchViewModel"
-			type="com.example.socarpaymentcalculate.viewmodel.SearchViewModel" />
+			name="item"
+			type="List&lt;Poi&gt;" />
 	</data>
 	
 	
@@ -44,14 +48,13 @@
 				android:hint="검색하세요"
 				android:inputType="text"
 				android:maxLength="20"
-				android:maxLines="1"
-				android:text="@={searchViewModel.keyword}" />
+				android:maxLines="1" />
 			
 			<Button
+				android:id="@+id/btn_search"
 				android:layout_width="0dp"
 				android:layout_height="match_parent"
 				android:layout_weight="2"
-				android:onClick="@{() -> searchViewModel.searchPois()}"
 				android:text="검색" />
 		
 		</LinearLayout>
@@ -61,8 +64,8 @@
 			android:layout_width="match_parent"
 			android:layout_height="0dp"
 			android:layout_marginTop="8dp"
+			app:item="@{item}"
 			app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-			app:item="@{searchViewModel.searchedPois}"
 			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"

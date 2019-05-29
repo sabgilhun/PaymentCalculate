@@ -1,23 +1,22 @@
 package com.example.socarpaymentcalculate.common
 
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.Lifecycle.State.DESTROYED
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.OnLifecycleEvent
-import io.reactivex.Flowable
+import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 
 class RxLifecycleHandler<T>(
     owner: LifecycleOwner,
-    private val flowable: Flowable<T>,
+    private val observable: Observable<T>,
     private val observer: (T) -> Unit
 ) : LifecycleObserver {
     private val lifecycle = owner.lifecycle
     private var disposable: Disposable? = null
 
     init {
-        if (lifecycle.currentState != DESTROYED) {
+        if (lifecycle.currentState != Lifecycle.State.DESTROYED) {
             owner.lifecycle.addObserver(this)
             observeIfPossible()
         }
@@ -26,7 +25,7 @@ class RxLifecycleHandler<T>(
     private fun observeIfPossible() {
         if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
             disposable ?: let {
-                disposable = flowable.subscribe { data -> observer(data) }
+                disposable = observable.subscribe { data -> observer(data) }
             }
         }
     }

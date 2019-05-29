@@ -10,15 +10,21 @@ import com.example.socarpaymentcalculate.Constants.EXTRA_POI
 import com.example.socarpaymentcalculate.Constants.EXTRA_VIEW_ID
 import com.example.socarpaymentcalculate.R
 import com.example.socarpaymentcalculate.adapter.PoiAdapter
+import com.example.socarpaymentcalculate.common.setOnClickListner
+import com.example.socarpaymentcalculate.common.setTextChangeListener
 import com.example.socarpaymentcalculate.data.model.Poi
 import com.example.socarpaymentcalculate.databinding.ActivitySearchBinding
 import com.example.socarpaymentcalculate.view.base.BaseActivity
-import com.example.socarpaymentcalculate.viewmodel.SearchViewModel
+import com.example.socarpaymentcalculate.viewmodel.search.SearchBottunClickAction
+import com.example.socarpaymentcalculate.viewmodel.search.SearchKeywordChangeAction
+import com.example.socarpaymentcalculate.viewmodel.search.SearchViewModel
 
 class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_search) {
 
     @IdRes
     private var selectedView: Int = 0
+
+    private lateinit var searchViewModel: SearchViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,16 +35,26 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_sea
             throw IllegalStateException("No exist selected view data")
         }
 
-
-        binding.searchViewModel = getViewModel(SearchViewModel::class.java)
+        searchViewModel = getViewModel(SearchViewModel::class.java)
 
         LinearLayoutManager(applicationContext).also {
             binding.rvPois.layoutManager = it
             binding.rvPois.addItemDecoration(DividerItemDecoration(applicationContext, it.orientation))
         }
+
         binding.rvPois.adapter = PoiAdapter {
             finishActivityAfterItemSelection(it)
         }
+
+        binding.etSearch.setTextChangeListener {
+            searchViewModel.actionStream.onNext(SearchKeywordChangeAction(it))
+        }
+
+        binding.btnSearch.setOnClickListner {
+            searchViewModel.actionStream.onNext(SearchBottunClickAction())
+        }
+
+        searchViewModel.searchedPois.observe { binding.item = it }
     }
 
     private fun finishActivityAfterItemSelection(item: Poi) {

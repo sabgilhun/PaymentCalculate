@@ -10,7 +10,7 @@ import com.example.socarpaymentcalculate.Constants.EXTRA_POI
 import com.example.socarpaymentcalculate.Constants.EXTRA_VIEW_ID
 import com.example.socarpaymentcalculate.R
 import com.example.socarpaymentcalculate.adapter.PoiAdapter
-import com.example.socarpaymentcalculate.common.setOnClickListner
+import com.example.socarpaymentcalculate.common.setClickListener
 import com.example.socarpaymentcalculate.common.setTextChangeListener
 import com.example.socarpaymentcalculate.data.model.Poi
 import com.example.socarpaymentcalculate.databinding.ActivitySearchBinding
@@ -50,7 +50,7 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_sea
             searchViewModel.actionStream.onNext(SearchKeywordChangeAction(it))
         }
 
-        binding.btnSearch.setOnClickListner {
+        binding.btnSearch.setClickListener {
             searchViewModel.actionStream.onNext(SearchBottunClickAction())
         }
 

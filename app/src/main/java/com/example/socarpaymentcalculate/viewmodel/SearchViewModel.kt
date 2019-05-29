@@ -16,12 +16,11 @@ class SearchViewModel(private val repository: TmapRepository) : BaseViewModel() 
 
     fun searchPois() {
         keyword.value?.let {
-            compositeDisposable.add(
-                repository
-                    .getPois(it, { result ->
-                        _searchedPois.value = result
-                    }, {})
-            )
+            repository
+                .getPois(it, { result ->
+                    _searchedPois.value = result
+                }, {}).track()
+
         }
     }
 }

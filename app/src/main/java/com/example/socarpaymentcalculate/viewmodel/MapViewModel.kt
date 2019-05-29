@@ -43,11 +43,10 @@ class MapViewModel(private val repository: TmapRepository) : BaseViewModel() {
     fun onClickSearch() {
         departurePoint?.let { departurePoint ->
             destination?.let { destination ->
-                compositeDisposable.add(
-                    repository.getRoutes(departurePoint, destination, {
-                        calculateMapData(it)
-                    }, {})
-                )
+                repository.getRoutes(departurePoint, destination, {
+                    calculateMapData(it)
+                }, {}).track()
+
             }
         }
     }

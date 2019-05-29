@@ -1,12 +1,11 @@
 package com.example.socarpaymentcalculate.data
 
+import com.example.socarpaymentcalculate.common.setNetworkingThread
 import com.example.socarpaymentcalculate.data.model.Poi
 import com.example.socarpaymentcalculate.data.model.Route
 import com.example.socarpaymentcalculate.data.remote.TmapDataSource
 import com.example.socarpaymentcalculate.data.remote.TmapDataSourceImpl
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
 
 object TmapRepositoryImpl : TmapRepository {
 
@@ -19,8 +18,7 @@ object TmapRepositoryImpl : TmapRepository {
     ): Disposable {
         return dataSource
             .getPois(keyword)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+            .setNetworkingThread()
             .subscribe(success, {
                 fail.invoke("서버에서 데이터를 가져오는데에 실패하였습니다.")
             })
@@ -34,8 +32,7 @@ object TmapRepositoryImpl : TmapRepository {
     ): Disposable {
         return dataSource
             .getRoutes(startPoi, endPoi)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+            .setNetworkingThread()
             .subscribe(success, {
                 fail.invoke("서버에서 데이터를 가져오는데에 실패하였습니다.")
             })

@@ -4,4 +4,4 @@ import com.example.socarpaymentcalculate.common.Action
 
 class SearchKeywordChangeAction(val keyword: String) : Action
 
-class SearchBottunClickAction : Action
+class SearchButtonClickAction : Action

@@ -1,4 +1,4 @@
-package com.example.socarpaymentcalculate.viewmodel
+package com.example.socarpaymentcalculate.viewmodel.map
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

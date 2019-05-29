@@ -13,7 +13,7 @@ class SearchViewModel(private val repository: TmapRepository) : BaseViewModel() 
 
     private var _searchedPois = PublishSubject.create<List<Poi>>()
     val searchedPois: Observable<List<Poi>>
-        get() = _searchedPois.hide()
+        get() = _searchedPois
 
     init {
         actionStream
@@ -23,7 +23,7 @@ class SearchViewModel(private val repository: TmapRepository) : BaseViewModel() 
             .track()
 
         actionStream
-            .filterTo(SearchBottunClickAction::class.java)
+            .filterTo(SearchButtonClickAction::class.java)
             .subscribe { searchPois() }
             .track()
     }

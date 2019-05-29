@@ -15,7 +15,7 @@ import com.example.socarpaymentcalculate.common.setTextChangeListener
 import com.example.socarpaymentcalculate.data.model.Poi
 import com.example.socarpaymentcalculate.databinding.ActivitySearchBinding
 import com.example.socarpaymentcalculate.view.base.BaseActivity
-import com.example.socarpaymentcalculate.viewmodel.search.SearchBottunClickAction
+import com.example.socarpaymentcalculate.viewmodel.search.SearchButtonClickAction
 import com.example.socarpaymentcalculate.viewmodel.search.SearchKeywordChangeAction
 import com.example.socarpaymentcalculate.viewmodel.search.SearchViewModel
 
@@ -51,7 +51,7 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_sea
         }
 
         binding.btnSearch.setClickListener {
-            searchViewModel.actionStream.onNext(SearchBottunClickAction())
+            searchViewModel.actionStream.onNext(SearchButtonClickAction())
         }
 
         searchViewModel.searchedPois.observe { binding.item = it }

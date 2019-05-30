@@ -8,7 +8,7 @@ import io.reactivex.subjects.PublishSubject
 
 abstract class BaseViewModel : ViewModel() {
 
-    val actionStream = PublishSubject.create<Action>()
+    protected val actionStream = PublishSubject.create<Action>()
 
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
@@ -21,4 +21,7 @@ abstract class BaseViewModel : ViewModel() {
         super.onCleared()
     }
 
+    fun <T : Action> flowAction(action: T) {
+        actionStream.onNext(action)
+    }
 }

@@ -11,6 +11,7 @@ import com.example.socarpaymentcalculate.Constants.EXTRA_VIEW_ID
 import com.example.socarpaymentcalculate.R
 import com.example.socarpaymentcalculate.adapter.PoiAdapter
 import com.example.socarpaymentcalculate.common.setClickListener
+import com.example.socarpaymentcalculate.common.setItem
 import com.example.socarpaymentcalculate.common.setTextChangeListener
 import com.example.socarpaymentcalculate.data.model.Poi
 import com.example.socarpaymentcalculate.databinding.ActivitySearchBinding
@@ -37,24 +38,11 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_sea
 
         searchViewModel = getViewModel(SearchViewModel::class.java)
 
-        LinearLayoutManager(applicationContext).also {
-            binding.rvPois.layoutManager = it
-            binding.rvPois.addItemDecoration(DividerItemDecoration(applicationContext, it.orientation))
-        }
+        setupPoiRecyclerView()
 
-        binding.rvPois.adapter = PoiAdapter {
-            finishActivityAfterItemSelection(it)
-        }
+        setupObservingData()
 
-        binding.etSearch.setTextChangeListener {
-            searchViewModel.actionStream.onNext(SearchKeywordChangeAction(it))
-        }
-
-        binding.btnSearch.setClickListener {
-            searchViewModel.actionStream.onNext(SearchButtonClickAction())
-        }
-
-        searchViewModel.searchedPois.observe { binding.item = it }
+        setupListener()
     }
 
     private fun finishActivityAfterItemSelection(item: Poi) {
@@ -63,6 +51,34 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_sea
             putExtra(EXTRA_VIEW_ID, selectedView)
         })
         finish()
+    }
+
+    private fun setupPoiRecyclerView() {
+        binding.rvPois.apply {
+            LinearLayoutManager(applicationContext).also {
+                layoutManager = it
+                addItemDecoration(DividerItemDecoration(applicationContext, it.orientation))
+            }
+            binding.rvPois.adapter = PoiAdapter {
+                finishActivityAfterItemSelection(it)
+            }
+        }
+    }
+
+    private fun setupObservingData() {
+        searchViewModel.searchedPois.observe {
+            binding.rvPois.setItem<Poi, PoiAdapter>(it)
+        }
+    }
+
+    private fun setupListener() {
+        binding.etSearch.setTextChangeListener {
+            searchViewModel.flowAction(SearchKeywordChangeAction(it))
+        }
+
+        binding.btnSearch.setClickListener {
+            searchViewModel.flowAction(SearchButtonClickAction())
+        }
     }
 
 }

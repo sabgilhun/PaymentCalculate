@@ -4,36 +4,6 @@
 	xmlns:tool="http://schemas.android.com/tools">
 	
 	<data>
-		
-		<import type="java.util.List" />
-		
-		<import type="com.example.socarpaymentcalculate.data.enums.CarType" />
-		
-		<import type="com.example.socarpaymentcalculate.data.enums.CarModel" />
-		
-		<variable
-			name="carTypeList"
-			type="List&lt;CarType&gt;" />
-		
-		<variable
-			name="carModelList"
-			type="List&lt;CarModel&gt;" />
-		
-		<variable
-			name="mapFocus"
-			type="com.google.android.gms.maps.model.LatLngBounds" />
-		
-		<variable
-			name="departurePointMarkerLatLng"
-			type="com.google.android.gms.maps.model.LatLng" />
-		
-		<variable
-			name="destinationMarkerLatLng"
-			type="com.google.android.gms.maps.model.LatLng" />
-		
-		<variable
-			name="route"
-			type="com.example.socarpaymentcalculate.data.model.Route" />
 	
 	</data>
 	
@@ -49,10 +19,7 @@
 				android:id="@+id/map_view"
 				android:layout_width="0dp"
 				android:layout_height="0dp"
-				app:camera_focus="@{mapFocus}"
 				app:departurePointMarkerIcon="@drawable/map_marker_start"
-				app:departure_point="@{departurePointMarkerLatLng}"
-				app:destination="@{destinationMarkerLatLng}"
 				app:destinationMarkerIcon="@drawable/map_marker_end"
 				app:layout_constraintBottom_toBottomOf="parent"
 				app:layout_constraintEnd_toEndOf="parent"
@@ -61,8 +28,7 @@
 				app:layout_constraintTop_toTopOf="parent"
 				app:layout_constraintVertical_bias="0.0"
 				app:polylineColor="@color/colorPrimary"
-				app:polylineWith="4dp"
-				app:route="@{route}" />
+				app:polylineWith="4dp" />
 			
 			<TextView
 				android:id="@+id/tv_departure"
@@ -134,7 +100,6 @@
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
 				android:layout_marginTop="16dp"
-				app:item_car_type="@{carTypeList}"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintTop_toBottomOf="@id/tv_title" />
@@ -144,7 +109,6 @@
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
 				android:layout_marginTop="8dp"
-				app:item_car_model="@{carModelList}"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintTop_toBottomOf="@id/rv_car_type" />

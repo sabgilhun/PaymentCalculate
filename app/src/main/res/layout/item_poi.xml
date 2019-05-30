@@ -16,7 +16,6 @@
 		
 		<TextView
 			android:id="@+id/tv_poi_name"
-			android:textStyle="bold"
 			android:layout_width="match_parent"
 			android:layout_height="0dp"
 			android:layout_weight="5"
@@ -24,7 +23,8 @@
 			android:paddingStart="4dp"
 			android:paddingEnd="4dp"
 			android:text="@{item.name}"
-			android:textSize="14sp" />
+			android:textSize="14sp"
+			android:textStyle="bold" />
 		
 		<TextView
 			android:id="@+id/tv_new_address"

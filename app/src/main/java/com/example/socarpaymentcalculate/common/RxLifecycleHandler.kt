@@ -1,5 +1,6 @@
 package com.example.socarpaymentcalculate.common
 
+import android.util.Log
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
@@ -25,7 +26,8 @@ class RxLifecycleHandler<T>(
     private fun observeIfPossible() {
         if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
             disposable ?: let {
-                disposable = observable.subscribe { data -> observer(data) }
+                disposable = observable.subscribe({ data -> observer(data) },
+                    { error -> Log.e("observing data error", error.toString()) })
             }
         }
     }

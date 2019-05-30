@@ -3,14 +3,7 @@
 	xmlns:app="http://schemas.android.com/apk/res-auto">
 	
 	<data>
-		
-		<import type="java.util.List" />
-		
-		<import type="com.example.socarpaymentcalculate.data.model.Poi" />
-		
-		<variable
-			name="item"
-			type="List&lt;Poi&gt;" />
+	
 	</data>
 	
 	
@@ -64,7 +57,6 @@
 			android:layout_width="match_parent"
 			android:layout_height="0dp"
 			android:layout_marginTop="8dp"
-			app:item="@{item}"
 			app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
 			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"

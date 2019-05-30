@@ -14,6 +14,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 
 object BindingAdapter {
+
     @BindingAdapter("item_car_type")
     @JvmStatic
     fun setRecyclerViewCarTypeItem(view: RecyclerView, item: List<CarType>?) {

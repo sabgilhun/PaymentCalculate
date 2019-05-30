@@ -20,8 +20,21 @@
 			type="List&lt;CarModel&gt;" />
 		
 		<variable
-			name="mapViewModel"
-			type="com.example.socarpaymentcalculate.viewmodel.map.MapViewModel" />
+			name="mapFocus"
+			type="com.google.android.gms.maps.model.LatLngBounds" />
+		
+		<variable
+			name="departurePointMarkerLatLng"
+			type="com.google.android.gms.maps.model.LatLng" />
+		
+		<variable
+			name="destinationMarkerLatLng"
+			type="com.google.android.gms.maps.model.LatLng" />
+		
+		<variable
+			name="route"
+			type="com.example.socarpaymentcalculate.data.model.Route" />
+	
 	</data>
 	
 	<androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -36,10 +49,10 @@
 				android:id="@+id/map_view"
 				android:layout_width="0dp"
 				android:layout_height="0dp"
-				app:camera_focus="@{mapViewModel.mapFocus}"
+				app:camera_focus="@{mapFocus}"
 				app:departurePointMarkerIcon="@drawable/map_marker_start"
-				app:departure_point="@{mapViewModel.departurePointMarkerPosition}"
-				app:destination="@{mapViewModel.destinationMarkerPosition}"
+				app:departure_point="@{departurePointMarkerLatLng}"
+				app:destination="@{destinationMarkerLatLng}"
 				app:destinationMarkerIcon="@drawable/map_marker_end"
 				app:layout_constraintBottom_toBottomOf="parent"
 				app:layout_constraintEnd_toEndOf="parent"
@@ -49,7 +62,7 @@
 				app:layout_constraintVertical_bias="0.0"
 				app:polylineColor="@color/colorPrimary"
 				app:polylineWith="4dp"
-				app:route="@{mapViewModel.route}" />
+				app:route="@{route}" />
 			
 			<TextView
 				android:id="@+id/tv_departure"
@@ -63,7 +76,6 @@
 				android:onClick="onClickSearchTextBox"
 				android:paddingStart="8dp"
 				android:paddingEnd="8dp"
-				android:text="@{mapViewModel.departurePointName}"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintTop_toTopOf="parent" />
@@ -80,15 +92,14 @@
 				android:onClick="onClickSearchTextBox"
 				android:paddingStart="8dp"
 				android:paddingEnd="8dp"
-				android:text="@{mapViewModel.destinationName}"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintTop_toBottomOf="@id/tv_departure" />
 			
 			<Button
+				android:id="@+id/btn_search"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:onClick="@{() -> mapViewModel.onClickSearch()}"
 				android:text="검색"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintStart_toStartOf="parent"

@@ -19,8 +19,7 @@
 				android:id="@+id/map_view"
 				android:layout_width="0dp"
 				android:layout_height="0dp"
-				app:departurePointMarkerIcon="@drawable/map_marker_start"
-				app:destinationMarkerIcon="@drawable/map_marker_end"
+				app:endPointMarkerIcon="@drawable/map_marker_end"
 				app:layout_constraintBottom_toBottomOf="parent"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintHorizontal_bias="1.0"
@@ -28,10 +27,11 @@
 				app:layout_constraintTop_toTopOf="parent"
 				app:layout_constraintVertical_bias="0.0"
 				app:polylineColor="@color/colorPrimary"
-				app:polylineWith="4dp" />
+				app:polylineWith="4dp"
+				app:startPointMarkerIcon="@drawable/map_marker_start" />
 			
 			<TextView
-				android:id="@+id/tv_departure"
+				android:id="@+id/tv_startPoint"
 				android:layout_width="match_parent"
 				android:layout_height="40dp"
 				android:layout_marginStart="16dp"
@@ -47,7 +47,7 @@
 				app:layout_constraintTop_toTopOf="parent" />
 			
 			<TextView
-				android:id="@+id/tv_destination"
+				android:id="@+id/tv_endPoint"
 				android:layout_width="match_parent"
 				android:layout_height="40dp"
 				android:layout_marginStart="16dp"
@@ -60,7 +60,7 @@
 				android:paddingEnd="8dp"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintTop_toBottomOf="@id/tv_departure" />
+				app:layout_constraintTop_toBottomOf="@id/tv_startPoint" />
 			
 			<Button
 				android:id="@+id/btn_search"
@@ -69,7 +69,7 @@
 				android:text="검색"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintTop_toBottomOf="@id/tv_destination" />
+				app:layout_constraintTop_toBottomOf="@id/tv_endPoint" />
 		
 		</androidx.constraintlayout.widget.ConstraintLayout>
 		

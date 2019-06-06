@@ -14,17 +14,17 @@ import io.reactivex.subjects.PublishSubject
 
 class MapViewModel(private val repository: TmapRepository) : BaseViewModel() {
 
-    private var departurePoint: Poi? = null
+    private var startPoint: Poi? = null
 
-    private var destination: Poi? = null
+    private var endPoint: Poi? = null
 
-    private val _departurePointMarkerPosition = PublishSubject.create<LatLng>()
-    val departurePointMarkerPosition: Observable<LatLng>
-        get() = _departurePointMarkerPosition
+    private val _startPointMarkerPosition = PublishSubject.create<LatLng>()
+    val startPointMarkerPosition: Observable<LatLng>
+        get() = _startPointMarkerPosition
 
-    private val _destinationMarkerPosition = PublishSubject.create<LatLng>()
-    val destinationMarkerPosition: Observable<LatLng>
-        get() = _destinationMarkerPosition
+    private val _endPointMarkerPosition = PublishSubject.create<LatLng>()
+    val endPointMarkerPosition: Observable<LatLng>
+        get() = _endPointMarkerPosition
 
     private val _mapFocus = PublishSubject.create<LatLngBounds>()
     val mapFocus: Observable<LatLngBounds>
@@ -34,25 +34,25 @@ class MapViewModel(private val repository: TmapRepository) : BaseViewModel() {
     val route: Observable<Route>
         get() = _route
 
-    private val _departurePointName = BehaviorSubject.create<String>()
-    val departurePointName: Observable<String>
-        get() = _departurePointName
+    private val _startPointName = BehaviorSubject.create<String>()
+    val startPointName: Observable<String>
+        get() = _startPointName
 
-    private val _destinationName = BehaviorSubject.create<String>()
-    val destinationName: Observable<String>
-        get() = _destinationName
+    private val _endPointName = BehaviorSubject.create<String>()
+    val endPointName: Observable<String>
+        get() = _endPointName
 
     init {
         actionStream
-            .filterTo(SetDeparturePointAction::class.java)
-            .map { it.departurePoint }
-            .subscribe(::setDeparture)
+            .filterTo(SetStartPointAction::class.java)
+            .map { it.startPoint }
+            .subscribe(::setStartPoint)
             .track()
 
         actionStream
-            .filterTo(SetDestinationAction::class.java)
-            .map { it.destination }
-            .subscribe(::setDestination)
+            .filterTo(SetEndPointAction::class.java)
+            .map { it.endPoint }
+            .subscribe(::setEndPoint)
             .track()
 
         actionStream
@@ -62,28 +62,28 @@ class MapViewModel(private val repository: TmapRepository) : BaseViewModel() {
     }
 
     private fun onClickSearch() {
-        departurePoint?.let { departurePoint ->
-            destination?.let { destination ->
-                repository.getRoutes(departurePoint, destination, ::calculateMapData) {}.track()
+        startPoint?.let { startPoint ->
+            endPoint?.let { endPoint ->
+                repository.getRoutes(startPoint, endPoint, ::calculateMapData) {}.track()
             }
         }
     }
 
-    private fun setDeparture(departurePoint: Poi) {
-        this.departurePoint = departurePoint
-        _departurePointName.onNext(departurePoint.name)
+    private fun setStartPoint(startPoint: Poi) {
+        this.startPoint = startPoint
+        _startPointName.onNext(startPoint.name)
     }
 
-    private fun setDestination(destination: Poi) {
-        this.destination = destination
-        _destinationName.onNext(destination.name)
+    private fun setEndPoint(endPoint: Poi) {
+        this.endPoint = endPoint
+        _endPointName.onNext(endPoint.name)
     }
 
     private fun calculateMapData(route: Route) {
         if (route.coordinates.isNotEmpty()) {
 
-            _departurePointMarkerPosition.onNext(route.coordinates.first())
-            _destinationMarkerPosition.onNext(route.coordinates.last())
+            _startPointMarkerPosition.onNext(route.coordinates.first())
+            _endPointMarkerPosition.onNext(route.coordinates.last())
 
             _mapFocus.onNext(
                 LatLngBounds(

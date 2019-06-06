@@ -13,18 +13,18 @@ class NavigationGoogleMapView @JvmOverloads constructor(
 ) : GoogleMapView(context, attrs, defStyleAttr) {
 
     /* Attributes */
-    private var departurePointMarkerIconId: Int = 0
+    private var startPointMarkerIconId: Int = 0
 
-    private var destinationMarkerIconId: Int = 0
+    private var endPointMarkerIconId: Int = 0
 
     private var polylineColor: Int = DEFAULT_POLYLINE_COLOR
 
     private var polylineWith: Int = DEFAULT_POLYLINE_WIDTH
 
     /* Internal Values */
-    private var departurePointMarker: Marker? = null
+    private var startPointMarker: Marker? = null
 
-    private var destinationMarker: Marker? = null
+    private var endPointMarker: Marker? = null
 
     private var routePolyline: Polyline? = null
 
@@ -33,12 +33,12 @@ class NavigationGoogleMapView @JvmOverloads constructor(
 
             val typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.NavigationGoogleMapView)
 
-            departurePointMarkerIconId = typedArray.getResourceId(
-                R.styleable.NavigationGoogleMapView_departurePointMarkerIcon, 0
+            startPointMarkerIconId = typedArray.getResourceId(
+                R.styleable.NavigationGoogleMapView_startPointMarkerIcon, 0
             )
 
-            destinationMarkerIconId = typedArray.getResourceId(
-                R.styleable.NavigationGoogleMapView_destinationMarkerIcon, 0
+            endPointMarkerIconId = typedArray.getResourceId(
+                R.styleable.NavigationGoogleMapView_endPointMarkerIcon, 0
             )
 
             polylineColor = typedArray.getColor(
@@ -55,23 +55,23 @@ class NavigationGoogleMapView @JvmOverloads constructor(
         }
     }
 
-    fun setDeparturePointMarker(latLng: LatLng) {
-        departurePointMarker = departurePointMarker?.apply {
+    fun setStartPointMarker(latLng: LatLng) {
+        startPointMarker = startPointMarker?.apply {
             position = latLng
         } ?: googleMap?.addMarker(MarkerOptions().apply {
             position(latLng)
-            BitmapDescriptorFactory.fromResource(departurePointMarkerIconId)?.let {
+            BitmapDescriptorFactory.fromResource(startPointMarkerIconId)?.let {
                 icon(it)
             }
         })
     }
 
-    fun setDestinationMarker(latLng: LatLng) {
-        destinationMarker = destinationMarker?.apply {
+    fun setEndPointMarker(latLng: LatLng) {
+        endPointMarker = endPointMarker?.apply {
             position = latLng
         } ?: googleMap?.addMarker(MarkerOptions().apply {
             position(latLng)
-            BitmapDescriptorFactory.fromResource(destinationMarkerIconId)?.let {
+            BitmapDescriptorFactory.fromResource(endPointMarkerIconId)?.let {
                 icon(it)
             }
         })

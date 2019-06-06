@@ -25,8 +25,8 @@ import com.example.socarpaymentcalculate.viewmodel.fare.SelectCarModelAction
 import com.example.socarpaymentcalculate.viewmodel.fare.SelectCarTypeAction
 import com.example.socarpaymentcalculate.viewmodel.map.ClickSearchButtonAction
 import com.example.socarpaymentcalculate.viewmodel.map.MapViewModel
-import com.example.socarpaymentcalculate.viewmodel.map.SetDeparturePointAction
-import com.example.socarpaymentcalculate.viewmodel.map.SetDestinationAction
+import com.example.socarpaymentcalculate.viewmodel.map.SetStartPointAction
+import com.example.socarpaymentcalculate.viewmodel.map.SetEndPointAction
 
 class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
@@ -51,13 +51,13 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
     fun onClickSearchTextBox(view: View) {
         val intent = when {
-            view.id == R.id.tv_departure ->
+            view.id == R.id.tv_startPoint ->
                 Intent(this, SearchActivity::class.java)
-                    .putExtra(EXTRA_VIEW_ID, R.id.tv_departure)
+                    .putExtra(EXTRA_VIEW_ID, R.id.tv_startPoint)
 
-            view.id == R.id.tv_destination ->
+            view.id == R.id.tv_endPoint ->
                 Intent(this, SearchActivity::class.java)
-                    .putExtra(EXTRA_VIEW_ID, R.id.tv_destination)
+                    .putExtra(EXTRA_VIEW_ID, R.id.tv_endPoint)
 
             else ->
                 throw IllegalStateException("Unknown view $view")
@@ -74,16 +74,16 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
         if (requestCode == REQUEST_CODE_HOME_TO_SEARCH) {
             with(data?.getIntExtra(EXTRA_VIEW_ID, 0)) {
                 when {
-                    this == R.id.tv_departure ->
+                    this == R.id.tv_startPoint ->
                         (data?.getParcelableExtra(EXTRA_POI) as? Poi)
                             ?.also {
-                                mapViewModel.flowAction(SetDeparturePointAction(it))
+                                mapViewModel.flowAction(SetStartPointAction(it))
                             }
 
-                    this == R.id.tv_destination ->
+                    this == R.id.tv_endPoint ->
                         (data?.getParcelableExtra(EXTRA_POI) as? Poi)
                             ?.also {
-                                mapViewModel.flowAction(SetDestinationAction(it))
+                                mapViewModel.flowAction(SetEndPointAction(it))
                             }
 
                     else ->
@@ -126,9 +126,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
             mapViewModel.mapFocus.observe(::setCameraFocus)
 
-            mapViewModel.departurePointMarkerPosition.observe(::setDeparturePointMarker)
+            mapViewModel.startPointMarkerPosition.observe(::setStartPointMarker)
 
-            mapViewModel.destinationMarkerPosition.observe(::setDestinationMarker)
+            mapViewModel.endPointMarkerPosition.observe(::setEndPointMarker)
 
             mapViewModel.route.observe {
                 fareViewModel.flowAction(DetermineRouteAction(it))
@@ -136,9 +136,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
             }
         }
 
-        mapViewModel.departurePointName.observe(binding.tvDeparture::setText)
+        mapViewModel.startPointName.observe(binding.tvStartPoint::setText)
 
-        mapViewModel.destinationName.observe(binding.tvDestination::setText)
+        mapViewModel.endPointName.observe(binding.tvEndPoint::setText)
 
         fareViewModel.carModelList.observe {
             binding.rvCarModel.setItem<CarModel, CarModelAdapter>(it)

@@ -3,8 +3,8 @@ package com.example.socarpaymentcalculate.viewmodel.map
 import com.example.socarpaymentcalculate.common.Action
 import com.example.socarpaymentcalculate.data.model.Poi
 
-class SetDeparturePointAction(val departurePoint: Poi) : Action
+class SetStartPointAction(val startPoint: Poi) : Action
 
-class SetDestinationAction(val destination: Poi) : Action
+class SetEndPointAction(val endPoint: Poi) : Action
 
 class ClickSearchButtonAction : Action

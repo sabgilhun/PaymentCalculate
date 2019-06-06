@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<declare-styleable name="NavigationGoogleMapView">
-		<attr name="departurePointMarkerIcon" format="reference" />
-		<attr name="destinationMarkerIcon" format="reference" />
+		<attr name="startPointMarkerIcon" format="reference" />
+		<attr name="endPointMarkerIcon" format="reference" />
 		<attr name="polylineColor" format="reference|color" />
 		<attr name="polylineWith" format="reference|dimension" />
 	</declare-styleable>

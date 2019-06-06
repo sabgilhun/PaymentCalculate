@@ -6,8 +6,13 @@ import io.reactivex.Single
 
 interface TmapDataSource {
 
-    fun getPois(searchKeyword: String): Single<List<Poi>>
+    fun getPois(
+        keyword: String
+    ): Single<List<Poi>>
 
-    fun getRoutes(startPoi: Poi, endPoi: Poi): Single<Route>
+    fun getRoutes(
+        startPoi: Poi,
+        endPoi: Poi
+    ): Single<Route>
 
 }

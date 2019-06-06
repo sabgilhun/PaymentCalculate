@@ -1,6 +1,7 @@
 package com.example.socarpaymentcalculate.viewmodel.map
 
 import com.example.socarpaymentcalculate.common.filterTo
+import com.example.socarpaymentcalculate.common.setNetworkingThread
 import com.example.socarpaymentcalculate.data.TmapRepository
 import com.example.socarpaymentcalculate.data.model.LatLngFactory
 import com.example.socarpaymentcalculate.data.model.Poi
@@ -64,7 +65,13 @@ class MapViewModel(private val repository: TmapRepository) : BaseViewModel() {
     private fun onClickSearch() {
         startPoint?.let { startPoint ->
             endPoint?.let { endPoint ->
-                repository.getRoutes(startPoint, endPoint, ::calculateMapData) {}.track()
+                repository.getRoutes(startPoint, endPoint)
+                    .setNetworkingThread()
+                    .subscribe(
+                        ::calculateMapData,
+                        ::handleRemoteError
+                    )
+                    .track()
             }
         }
     }

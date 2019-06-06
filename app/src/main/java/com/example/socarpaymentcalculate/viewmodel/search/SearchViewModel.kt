@@ -1,6 +1,7 @@
 package com.example.socarpaymentcalculate.viewmodel.search
 
 import com.example.socarpaymentcalculate.common.filterTo
+import com.example.socarpaymentcalculate.common.setNetworkingThread
 import com.example.socarpaymentcalculate.data.TmapRepository
 import com.example.socarpaymentcalculate.data.model.Poi
 import com.example.socarpaymentcalculate.viewmodel.base.BaseViewModel
@@ -30,9 +31,15 @@ class SearchViewModel(private val repository: TmapRepository) : BaseViewModel() 
 
     private fun searchPois() {
         if (!keyword.isBlank()) {
-            repository.getPois(keyword, {
-                _searchedPois.onNext(it)
-            }, {}).track()
+            repository.getPois(keyword)
+                .setNetworkingThread()
+                .subscribe(
+                    {
+                        _searchedPois.onNext(it)
+                    },
+                    ::handleRemoteError
+                )
+                .track()
         }
     }
 }

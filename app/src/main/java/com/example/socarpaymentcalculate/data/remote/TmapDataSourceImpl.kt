@@ -38,11 +38,11 @@ object TmapDataSourceImpl : TmapDataSource {
         }
     }
 
-    override fun getPois(searchKeyword: String): Single<List<Poi>> {
+    override fun getPois(keyword: String): Single<List<Poi>> {
 
         return retrofit.getPois(
             version = TMAP_VERSION,
-            searchKeyword = searchKeyword,
+            searchKeyword = keyword,
             appKey = APP_KEY
         ).map { response ->
             response.searchPoiInfo.pois.poi.map {

@@ -54,4 +54,9 @@ abstract class BaseActivity<B : ViewDataBinding> constructor(
     protected fun hideProgressBar() {
         progressBar?.visibility = View.GONE
     }
+
+    protected inline fun bind(block: B.() -> Unit) {
+        binding.block()
+    }
+
 }

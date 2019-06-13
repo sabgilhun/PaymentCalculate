@@ -12,7 +12,6 @@ import com.example.socarpaymentcalculate.Constants.REQUEST_CODE_HOME_TO_SEARCH
 import com.example.socarpaymentcalculate.R
 import com.example.socarpaymentcalculate.adapter.CarModelAdapter
 import com.example.socarpaymentcalculate.adapter.CarTypeAdapter
-import com.example.socarpaymentcalculate.common.setClickListener
 import com.example.socarpaymentcalculate.common.setItem
 import com.example.socarpaymentcalculate.data.enums.CarModel
 import com.example.socarpaymentcalculate.data.enums.CarType
@@ -25,8 +24,8 @@ import com.example.socarpaymentcalculate.viewmodel.fare.SelectCarModelAction
 import com.example.socarpaymentcalculate.viewmodel.fare.SelectCarTypeAction
 import com.example.socarpaymentcalculate.viewmodel.map.ClickSearchButtonAction
 import com.example.socarpaymentcalculate.viewmodel.map.MapViewModel
-import com.example.socarpaymentcalculate.viewmodel.map.SetStartPointAction
 import com.example.socarpaymentcalculate.viewmodel.map.SetEndPointAction
+import com.example.socarpaymentcalculate.viewmodel.map.SetStartPointAction
 
 class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
@@ -94,17 +93,19 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
     }
 
     private fun setupCarTypeRecyclerView() {
-        binding.rvCarType.apply {
-            LinearLayoutManager(applicationContext).also {
-                it.orientation = LinearLayoutManager.HORIZONTAL
-                layoutManager = it
-                addItemDecoration(DividerItemDecoration(applicationContext, it.orientation))
-            }
-            adapter = CarTypeAdapter(applicationContext) {
-                fareViewModel.flowAction(SelectCarTypeAction(it))
-            }
+        bind {
+            rvCarType.apply {
+                LinearLayoutManager(applicationContext).also {
+                    it.orientation = LinearLayoutManager.HORIZONTAL
+                    layoutManager = it
+                    addItemDecoration(DividerItemDecoration(applicationContext, it.orientation))
+                }
+                adapter = CarTypeAdapter(applicationContext) {
+                    fareViewModel.flowAction(SelectCarTypeAction(it))
+                }
 
-            setItem<CarType, CarTypeAdapter>(CarType.values().toList())
+                setItem<CarType, CarTypeAdapter>(CarType.values().toList())
+            }
         }
     }
 
@@ -122,34 +123,35 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
     }
 
     private fun setupObservingData() {
-        binding.mapView.apply {
+        bind {
+            mapViewModel.let {
+                it.navigation.observe { navigation ->
+                    mapView.setCameraFocus(navigation.mapFocus)
+                    mapView.setStartPointMarker(navigation.startPointMarkerPosition)
+                    mapView.setEndPointMarker(navigation.endPointMarkerPosition)
+                    mapView.setRoutePolyline(navigation.route.coordinates)
+                    fareViewModel.flowAction(DetermineRouteAction(navigation.route))
+                }
 
-            mapViewModel.mapFocus.observe(::setCameraFocus)
+                it.searchedStartPoint.observe(tvStartPoint::setText)
+                it.searchedEndPoint.observe(tvEndPoint::setText)
+            }
 
-            mapViewModel.startPointMarkerPosition.observe(::setStartPointMarker)
+            fareViewModel.let {
+                it.carModelsOfSelectedCarType.observe { carModels ->
+                    rvCarModel.setItem<CarModel, CarModelAdapter>(carModels)
+                }
 
-            mapViewModel.endPointMarkerPosition.observe(::setEndPointMarker)
-
-            mapViewModel.route.observe {
-                fareViewModel.flowAction(DetermineRouteAction(it))
-                setRoutePolyline(it.coordinates)
+                it.calculatedFare.observe(tvFare::setText)
             }
         }
-
-        mapViewModel.startPointName.observe(binding.tvStartPoint::setText)
-
-        mapViewModel.endPointName.observe(binding.tvEndPoint::setText)
-
-        fareViewModel.carModelList.observe {
-            binding.rvCarModel.setItem<CarModel, CarModelAdapter>(it)
-        }
-
-        fareViewModel.calculatedFare.observe(binding.tvFare::setText)
     }
 
     private fun setupListener() {
-        binding.btnSearch.setClickListener {
-            mapViewModel.flowAction(ClickSearchButtonAction())
+        bind {
+            btnSearch.setOnClickListener {
+                mapViewModel.flowAction(ClickSearchButtonAction())
+            }
         }
     }
 }

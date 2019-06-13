@@ -36,7 +36,7 @@ data class Route private constructor(
                     }.toList()
 
             return Route(
-                totalDistance = totalDistance,
+                totalDistance = (totalDistance / 1000.0).toInt(),
                 totalTime = totalTime,
                 expectedTaxiFare = taxiFare,
                 coordinates = coordinates

@@ -12,7 +12,7 @@ class SearchViewModel(private val repository: TmapRepository) : BaseViewModel() 
 
     private var keyword: String = ""
 
-    private var _searchedPois = PublishSubject.create<List<Poi>>()
+    private val _searchedPois = PublishSubject.create<List<Poi>>()
     val searchedPois: Observable<List<Poi>>
         get() = _searchedPois
 

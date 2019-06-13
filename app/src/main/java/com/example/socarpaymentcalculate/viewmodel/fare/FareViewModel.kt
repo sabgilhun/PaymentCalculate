@@ -14,13 +14,13 @@ import io.reactivex.subjects.PublishSubject
 
 class FareViewModel(private val repository: TmapRepository) : BaseViewModel() {
 
-    private var route = BehaviorSubject.create<Route>()
+    private val route = BehaviorSubject.create<Route>()
 
-    private var _selectedCarModel = BehaviorSubject.create<CarModel>()
+    private val _selectedCarModel = BehaviorSubject.create<CarModel>()
     val selectedCarModel: Observable<CarModel>
         get() = _selectedCarModel
 
-    private var _selectedCarType = BehaviorSubject.create<CarType>()
+    private val _selectedCarType = BehaviorSubject.create<CarType>()
     val selectedCarType: Observable<CarType>
         get() = _selectedCarType
 

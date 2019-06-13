@@ -2,6 +2,7 @@ package com.example.socarpaymentcalculate.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -10,7 +11,8 @@ import com.example.socarpaymentcalculate.data.enums.CarType
 
 class CarTypeAdapter(
     private val context: Context,
-    private val onItemClickListener: ((item: CarType) -> Unit)?
+    private val onItemClickListener: ((item: CarType) -> Unit)?,
+    private val onBindViewHolderListener: ((view: View, item: CarType) -> Unit)?
 ) : ListAdapter<CarType, TextViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = TextViewHolder(
@@ -19,7 +21,8 @@ class CarTypeAdapter(
 
     override fun onBindViewHolder(holder: TextViewHolder, position: Int) {
         holder.binding.tv.text = context.getString(getItem(position).nameRes)
-        holder.binding.executePendingBindings()
+
+        onBindViewHolderListener?.invoke(holder.itemView, getItem(position))
 
         holder.itemView.setOnClickListener {
             onItemClickListener?.invoke(getItem(position))

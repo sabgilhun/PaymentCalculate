@@ -100,9 +100,14 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
                     layoutManager = it
                     addItemDecoration(DividerItemDecoration(applicationContext, it.orientation))
                 }
-                adapter = CarTypeAdapter(applicationContext) {
+
+                adapter = CarTypeAdapter(applicationContext, {
                     fareViewModel.flowAction(SelectCarTypeAction(it))
-                }
+                }, { view, carType ->
+                    fareViewModel.selectedCarType.observe {
+                        view.isSelected = (it == carType)
+                    }
+                })
 
                 setItem<CarType, CarTypeAdapter>(CarType.values().toList())
             }
@@ -116,9 +121,14 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
                 layoutManager = it
                 addItemDecoration(DividerItemDecoration(applicationContext, it.orientation))
             }
-            adapter = CarModelAdapter(applicationContext) {
+
+            adapter = CarModelAdapter(applicationContext, {
                 fareViewModel.flowAction(SelectCarModelAction(it))
-            }
+            }, { view, carModel ->
+                fareViewModel.selectedCarModel.observe {
+                    view.isSelected = (it == carModel)
+                }
+            })
         }
     }
 

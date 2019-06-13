@@ -22,7 +22,6 @@ import com.example.socarpaymentcalculate.viewmodel.fare.DetermineRouteAction
 import com.example.socarpaymentcalculate.viewmodel.fare.FareViewModel
 import com.example.socarpaymentcalculate.viewmodel.fare.SelectCarModelAction
 import com.example.socarpaymentcalculate.viewmodel.fare.SelectCarTypeAction
-import com.example.socarpaymentcalculate.viewmodel.map.ClickSearchButtonAction
 import com.example.socarpaymentcalculate.viewmodel.map.MapViewModel
 import com.example.socarpaymentcalculate.viewmodel.map.SetEndPointAction
 import com.example.socarpaymentcalculate.viewmodel.map.SetStartPointAction
@@ -44,8 +43,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
         setupCarModelRecyclerView()
 
         setupObservingData()
-
-        setupListener()
     }
 
     fun onClickSearchTextBox(view: View) {
@@ -153,14 +150,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
                 }
 
                 it.calculatedFare.observe(tvFare::setText)
-            }
-        }
-    }
-
-    private fun setupListener() {
-        bind {
-            btnSearch.setOnClickListener {
-                mapViewModel.flowAction(ClickSearchButtonAction())
             }
         }
     }

@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import com.example.socarpaymentcalculate.R
 import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.*
 
 class NavigationGoogleMapView @JvmOverloads constructor(
@@ -53,6 +54,11 @@ class NavigationGoogleMapView @JvmOverloads constructor(
 
             typedArray.recycle()
         }
+    }
+
+    override fun onMapReady(googleMap: GoogleMap) {
+        super.onMapReady(googleMap)
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(37.576209, 126.976817), 16.0f))
     }
 
     fun setStartPointMarker(latLng: LatLng) {

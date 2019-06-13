@@ -15,6 +15,83 @@
 			android:layout_width="match_parent"
 			android:layout_height="match_parent">
 			
+			<androidx.constraintlayout.widget.ConstraintLayout
+				android:id="@+id/ll_search_components"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:background="@drawable/shape_round_border_white"
+				android:orientation="vertical"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="parent">
+				
+				<TextView
+					android:id="@+id/tv_start_title"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginStart="8dp"
+					android:layout_marginTop="8dp"
+					android:layout_marginBottom="4dp"
+					android:text="출발"
+					android:textSize="14sp"
+					app:layout_constraintBottom_toTopOf="@+id/tv_end_title"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintTop_toTopOf="parent" />
+				
+				<TextView
+					android:id="@+id/tv_end_title"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginStart="8dp"
+					android:layout_marginTop="8dp"
+					android:layout_marginBottom="4dp"
+					android:text="도착"
+					android:textSize="14sp"
+					app:layout_constraintBottom_toBottomOf="parent"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintTop_toBottomOf="@+id/tv_start_title" />
+				
+				<TextView
+					android:id="@+id/tv_startPoint"
+					android:layout_width="0dp"
+					android:layout_height="40dp"
+					android:layout_marginStart="8dp"
+					android:layout_marginTop="8dp"
+					android:layout_marginEnd="8dp"
+					android:layout_marginBottom="8dp"
+					android:background="@drawable/shape_round_border_edge_primary"
+					android:gravity="center_vertical"
+					android:onClick="onClickSearchTextBox"
+					android:paddingStart="8dp"
+					android:paddingEnd="8dp"
+					android:textSize="14sp"
+					app:layout_constraintBottom_toTopOf="@+id/tv_endPoint"
+					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintHorizontal_bias="0.5"
+					app:layout_constraintStart_toEndOf="@id/tv_start_title"
+					app:layout_constraintTop_toTopOf="parent" />
+				
+				<TextView
+					android:id="@+id/tv_endPoint"
+					android:layout_width="0dp"
+					android:layout_height="40dp"
+					android:layout_marginStart="8dp"
+					android:layout_marginEnd="8dp"
+					android:layout_marginBottom="8dp"
+					android:background="@drawable/shape_round_border_edge_primary"
+					android:gravity="center_vertical"
+					android:onClick="onClickSearchTextBox"
+					android:paddingStart="8dp"
+					android:paddingEnd="8dp"
+					android:textSize="14sp"
+					app:layout_constraintBottom_toBottomOf="parent"
+					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintHorizontal_bias="0.5"
+					app:layout_constraintStart_toEndOf="@id/tv_end_title"
+					app:layout_constraintTop_toBottomOf="@+id/tv_startPoint" />
+			
+			</androidx.constraintlayout.widget.ConstraintLayout>
+			
 			<com.example.socarpaymentcalculate.view.custom.NavigationGoogleMapView
 				android:id="@+id/map_view"
 				android:layout_width="0dp"
@@ -24,52 +101,11 @@
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintHorizontal_bias="1.0"
 				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintTop_toTopOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/ll_search_components"
 				app:layout_constraintVertical_bias="0.0"
 				app:polylineColor="@color/colorPrimary"
 				app:polylineWith="4dp"
 				app:startPointMarkerIcon="@drawable/map_marker_start" />
-			
-			<TextView
-				android:id="@+id/tv_startPoint"
-				android:layout_width="match_parent"
-				android:layout_height="40dp"
-				android:layout_marginStart="16dp"
-				android:layout_marginTop="8dp"
-				android:layout_marginEnd="16dp"
-				android:background="@drawable/shape_round_border_white"
-				android:gravity="center_vertical"
-				android:onClick="onClickSearchTextBox"
-				android:paddingStart="8dp"
-				android:paddingEnd="8dp"
-				app:layout_constraintEnd_toEndOf="parent"
-				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintTop_toTopOf="parent" />
-			
-			<TextView
-				android:id="@+id/tv_endPoint"
-				android:layout_width="match_parent"
-				android:layout_height="40dp"
-				android:layout_marginStart="16dp"
-				android:layout_marginTop="8dp"
-				android:layout_marginEnd="16dp"
-				android:background="@drawable/shape_round_border_white"
-				android:gravity="center_vertical"
-				android:onClick="onClickSearchTextBox"
-				android:paddingStart="8dp"
-				android:paddingEnd="8dp"
-				app:layout_constraintEnd_toEndOf="parent"
-				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintTop_toBottomOf="@id/tv_startPoint" />
-			
-			<Button
-				android:id="@+id/btn_search"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:text="검색"
-				app:layout_constraintEnd_toEndOf="parent"
-				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintTop_toBottomOf="@id/tv_endPoint" />
 		
 		</androidx.constraintlayout.widget.ConstraintLayout>
 		
@@ -79,21 +115,31 @@
 			android:layout_height="300dp"
 			android:layout_margin="8dp"
 			android:background="@drawable/shape_round_border_white"
-			app:behavior_peekHeight="60dp"
+			app:behavior_peekHeight="56dp"
 			app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+			
+			<View
+				android:id="@+id/view_handle"
+				android:layout_width="36dp"
+				android:layout_height="4dp"
+				android:layout_margin="8dp"
+				android:background="@drawable/shape_round_border_gray"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="parent" />
 			
 			<TextView
 				android:id="@+id/tv_title"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_margin="8dp"
+				android:layout_marginBottom="8dp"
 				android:gravity="center_horizontal"
 				android:text="요금표"
 				android:textSize="24sp"
 				android:textStyle="bold"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintTop_toTopOf="parent" />
+				app:layout_constraintTop_toBottomOf="@id/view_handle" />
 			
 			<androidx.recyclerview.widget.RecyclerView
 				android:id="@+id/rv_car_type"

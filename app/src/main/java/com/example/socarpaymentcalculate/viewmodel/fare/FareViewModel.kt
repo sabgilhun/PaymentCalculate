@@ -4,6 +4,7 @@ import com.example.socarpaymentcalculate.common.filterTo
 import com.example.socarpaymentcalculate.data.TmapRepository
 import com.example.socarpaymentcalculate.data.enums.CarModel
 import com.example.socarpaymentcalculate.data.enums.CarType
+import com.example.socarpaymentcalculate.data.model.Fare
 import com.example.socarpaymentcalculate.data.model.Route
 import com.example.socarpaymentcalculate.viewmodel.base.BaseViewModel
 import io.reactivex.Observable
@@ -16,36 +17,19 @@ class FareViewModel(private val repository: TmapRepository) : BaseViewModel() {
 
     private val route = BehaviorSubject.create<Route>()
 
-    private val _selectedCarModel = BehaviorSubject.create<CarModel>()
-    val selectedCarModel: Observable<CarModel>
-        get() = _selectedCarModel
-
     private val _selectedCarType = BehaviorSubject.create<CarType>()
     val selectedCarType: Observable<CarType>
         get() = _selectedCarType
 
-    val carModelsOfSelectedCarType: Observable<List<CarModel>>
-        get() = _selectedCarType.map {
-            CarModel.values().filter { carModel ->
-                carModel.type == it
-            }.toList()
-        }
-
-    private val _calculatedFare = PublishSubject.create<Int>()
-    val calculatedFare: Observable<String>
-        get() = _calculatedFare.map(Int::toString)
+    private val _calculatedFare = PublishSubject.create<List<Fare>>()
+    val calculatedFare: Observable<List<Fare>>
+        get() = _calculatedFare
 
     init {
         actionStream
             .filterTo(SelectCarTypeAction::class.java)
             .map { it.carType }
             .subscribe(::onSelectCarType)
-            .track()
-
-        actionStream
-            .filterTo(SelectCarModelAction::class.java)
-            .map { it.carModel }
-            .subscribe(::onSelectCarModel)
             .track()
 
         actionStream
@@ -61,10 +45,6 @@ class FareViewModel(private val repository: TmapRepository) : BaseViewModel() {
         _selectedCarType.onNext(selectedCarType)
     }
 
-    private fun onSelectCarModel(selectedCarModel: CarModel) {
-        _selectedCarModel.onNext(selectedCarModel)
-    }
-
     private fun setRoute(route: Route) {
         this.route.onNext(route)
     }
@@ -72,11 +52,22 @@ class FareViewModel(private val repository: TmapRepository) : BaseViewModel() {
     private fun calculateFare() {
         Observables.combineLatest(
             route,
-            _selectedCarModel
-        ) { route, carModel ->
-            (route.totalDistance * carModel.farePerKiloMeter)
+            _selectedCarType
+        ) { route, carType ->
+            CarModel.values()
+                .filter { it.type == carType }
+                .map { carModel ->
+                    val totalMinutePerTen: Int = (route.totalTime / 60) / 10
+                    val drivingFare: Int = route.totalDistance * carModel.farePerKiloMeter
+
+                    Fare.of(
+                        carModel,
+                        route,
+                        (drivingFare + totalMinutePerTen * carModel.weekdayFarePerTenMinute),
+                        (drivingFare + totalMinutePerTen * carModel.weekendFarePerTenMinute)
+                    )
+                }
         }.subscribe(_calculatedFare::onNext)
             .track()
     }
-
 }

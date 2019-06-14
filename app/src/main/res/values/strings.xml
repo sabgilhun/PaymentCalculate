@@ -1,18 +1,29 @@
 <resources>
 	<string name="app_name">SocarPaymentCalculate</string>
 	
-	<string name="subcompact">경형</string>
-	<string name="compact">소형</string>
-	<string name="semi_midsize">준중형</string>
-	<string name="electric_vehicle">EV</string>
-	<string name="midsize">중형</string>
-	<string name="semi_fullsize">준대형</string>
-	<string name="fullsize">대형</string>
+	<string name="fare_kilo_meter">•%,d원/킬로미터당</string>
+	<string name="fare_minute_weekday">•%,d원/10분당(주중)</string>
+	<string name="fare_minute_weekend">•%,d원/10분당(주말)</string>
+	<string name="total_distance_title">예상 주행거리</string>
+	<string name="total_time_title">예상 주행시간</string>
+	<string name="distance_kilo_meter">%skm</string>
+	<string name="time_minute">%s분</string>
+	<string name="total_fare_divider"> / </string>
+	<string name="total_fare_title">예상 요금(주중/주말)</string>
+	<string name="total_fare">%,d원</string>
+	
+	<string name="subcompact">경차</string>
+	<string name="compact">소형차</string>
+	<string name="semi_midsize">준중형차</string>
+	<string name="electric_vehicle">EV(전기차)</string>
+	<string name="midsize">중형차</string>
+	<string name="semi_fullsize">준대형차</string>
+	<string name="fullsize">대형차</string>
 	<string name="compact_suv">소형 SUV</string>
 	<string name="semi_midsize_suv">준중형 SUV</string>
 	<string name="midsize_suv">중형 SUV</string>
-	<string name="van">승합</string>
-	<string name="high_class">수입</string>
+	<string name="van">승합차</string>
+	<string name="high_class">수입차</string>
 	
 	
 	<string name="all_new_morning">올뉴모닝</string>

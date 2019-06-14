@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools">
+	
+	<data>
+		
+		<variable
+			name="fare"
+			type="com.example.socarpaymentcalculate.data.model.Fare" />
+	</data>
+	
+	<androidx.constraintlayout.widget.ConstraintLayout
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:background="@color/colorBackGround"
+		android:padding="4dp">
+		
+		<TextView
+			android:id="@+id/tv_model_name"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_margin="4dp"
+			android:text="@{fare.carModel.nameRes}"
+			android:textColor="@color/colorTextDark"
+			android:textSize="16sp"
+			android:textStyle="bold"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent"
+			tools:text="올 뉴 모닝" />
+		
+		<ImageView
+			android:id="@+id/iv_photo"
+			android:layout_width="160dp"
+			android:layout_height="80dp"
+			android:layout_margin="4dp"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/tv_model_name"
+			app:setImage="@{fare.carModel.imageRes}"
+			tools:background="@drawable/img_pride" />
+		
+		<TextView
+			android:id="@+id/tv_fare_meter"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_margin="4dp"
+			android:text="@{@string/fare_kilo_meter(fare.carModel.farePerKiloMeter)}"
+			android:textColor="@color/colorText"
+			android:textSize="12sp"
+			app:layout_constraintEnd_toStartOf="@+id/tv_fare_minute_weekday"
+			app:layout_constraintHorizontal_bias="0.5"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/iv_photo"
+			tools:text="•120원/킬로미터당" />
+		
+		<TextView
+			android:id="@+id/tv_fare_minute_weekday"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_margin="4dp"
+			android:text="@{@string/fare_minute_weekday(fare.carModel.weekdayFarePerTenMinute)}"
+			android:textColor="@color/colorText"
+			android:textSize="12sp"
+			app:layout_constraintEnd_toStartOf="@+id/tv_fare_minute_weekend"
+			app:layout_constraintHorizontal_bias="0.5"
+			app:layout_constraintStart_toEndOf="@+id/tv_fare_meter"
+			app:layout_constraintTop_toBottomOf="@id/iv_photo"
+			tools:text="•720원/10분당 (주중)" />
+		
+		<TextView
+			android:id="@+id/tv_fare_minute_weekend"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_margin="4dp"
+			android:text="@{@string/fare_minute_weekend(fare.carModel.weekendFarePerTenMinute)}"
+			android:textColor="@color/colorText"
+			android:textSize="12sp"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintHorizontal_bias="0.5"
+			app:layout_constraintStart_toEndOf="@+id/tv_fare_minute_weekday"
+			app:layout_constraintTop_toBottomOf="@id/iv_photo"
+			tools:text="•720원/10분당 (주말)" />
+		
+		<TextView
+			android:id="@+id/tv_total_distance_title"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_margin="4dp"
+			android:text="@string/total_distance_title"
+			android:textColor="@color/colorTextDark"
+			android:textSize="12sp"
+			app:layout_constraintEnd_toStartOf="@+id/tv_total_distance"
+			app:layout_constraintHorizontal_bias="0.5"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/tv_fare_meter" />
+		
+		<TextView
+			android:id="@+id/tv_total_distance"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_margin="4dp"
+			android:text="@{@string/distance_kilo_meter(fare.totalDistance)}"
+			android:textColor="@color/colorPrimary"
+			android:textSize="14sp"
+			app:layout_constraintEnd_toStartOf="@+id/tv_total_time_title"
+			app:layout_constraintHorizontal_bias="0.5"
+			app:layout_constraintStart_toEndOf="@+id/tv_total_distance_title"
+			app:layout_constraintTop_toBottomOf="@id/tv_fare_meter"
+			tools:text="1200km" />
+		
+		<TextView
+			android:id="@+id/tv_total_time_title"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_margin="4dp"
+			android:text="@string/total_time_title"
+			android:textColor="@color/colorTextDark"
+			android:textSize="12sp"
+			app:layout_constraintEnd_toStartOf="@+id/tv_total_time"
+			app:layout_constraintHorizontal_bias="0.5"
+			app:layout_constraintStart_toEndOf="@+id/tv_total_distance"
+			app:layout_constraintTop_toBottomOf="@id/tv_fare_meter" />
+		
+		<TextView
+			android:id="@+id/tv_total_time"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_margin="4dp"
+			android:text="@{@string/time_minute(fare.totalTime)}"
+			android:textColor="@color/colorPrimary"
+			android:textSize="14sp"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintHorizontal_bias="0.5"
+			app:layout_constraintStart_toEndOf="@+id/tv_total_time_title"
+			app:layout_constraintTop_toBottomOf="@id/tv_fare_meter"
+			tools:text="120분" />
+		
+		<TextView
+			android:id="@+id/tv_total_fare_title"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_margin="12dp"
+			android:layout_marginStart="12dp"
+			android:layout_marginEnd="8dp"
+			android:text="@string/total_fare_title"
+			android:textColor="@color/colorTextDark"
+			android:textSize="12sp"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/tv_total_distance_title" />
+		
+		<TextView
+			android:id="@+id/tv_total_fare_weekday"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="8dp"
+			android:text="@{@string/total_fare(fare.totalFareWeekday)}"
+			android:textColor="@color/colorPrimary"
+			android:textSize="16sp"
+			android:textStyle="bold"
+			app:layout_constraintEnd_toStartOf="@id/tv_total_fare_divider"
+			app:layout_constraintHorizontal_chainStyle="packed"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/tv_total_fare_title"
+			tools:text="23450원" />
+		
+		<TextView
+			android:id="@+id/tv_total_fare_divider"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="8dp"
+			android:text="@string/total_fare_divider"
+			android:textColor="@color/colorPrimary"
+			android:textSize="16sp"
+			android:textStyle="bold"
+			app:layout_constraintEnd_toStartOf="@id/tv_total_fare_weekend"
+			app:layout_constraintStart_toEndOf="@+id/tv_total_fare_weekday"
+			app:layout_constraintTop_toBottomOf="@id/tv_total_fare_title" />
+		
+		<TextView
+			android:id="@+id/tv_total_fare_weekend"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="8dp"
+			android:layout_marginEnd="8dp"
+			android:text="@{@string/total_fare(fare.totalFareWeekend)}"
+			android:textColor="@color/colorPrimary"
+			android:textSize="16sp"
+			android:textStyle="bold"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toEndOf="@+id/tv_total_fare_divider"
+			app:layout_constraintTop_toBottomOf="@id/tv_total_fare_title"
+			tools:text="26000원" />
+	</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

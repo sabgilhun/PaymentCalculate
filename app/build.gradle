@@ -58,5 +58,5 @@ dependencies {
     // LifeCycle Components
     implementation "android.arch.lifecycle:extensions:$lifeCycleVersion"
     implementation "android.arch.lifecycle:viewmodel:$lifeCycleVersion"
-    implementation files('libs/com.skt.Tmap_1.60.jar')
+
 }

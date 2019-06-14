@@ -10,17 +10,16 @@ import com.example.socarpaymentcalculate.Constants.EXTRA_POI
 import com.example.socarpaymentcalculate.Constants.EXTRA_VIEW_ID
 import com.example.socarpaymentcalculate.Constants.REQUEST_CODE_HOME_TO_SEARCH
 import com.example.socarpaymentcalculate.R
-import com.example.socarpaymentcalculate.adapter.CarModelAdapter
 import com.example.socarpaymentcalculate.adapter.CarTypeAdapter
+import com.example.socarpaymentcalculate.adapter.FareAdapter
 import com.example.socarpaymentcalculate.common.setItem
-import com.example.socarpaymentcalculate.data.enums.CarModel
 import com.example.socarpaymentcalculate.data.enums.CarType
+import com.example.socarpaymentcalculate.data.model.Fare
 import com.example.socarpaymentcalculate.data.model.Poi
 import com.example.socarpaymentcalculate.databinding.ActivityHomeBinding
 import com.example.socarpaymentcalculate.view.base.BaseActivity
 import com.example.socarpaymentcalculate.viewmodel.fare.DetermineRouteAction
 import com.example.socarpaymentcalculate.viewmodel.fare.FareViewModel
-import com.example.socarpaymentcalculate.viewmodel.fare.SelectCarModelAction
 import com.example.socarpaymentcalculate.viewmodel.fare.SelectCarTypeAction
 import com.example.socarpaymentcalculate.viewmodel.map.MapViewModel
 import com.example.socarpaymentcalculate.viewmodel.map.SetEndPointAction
@@ -118,14 +117,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
                 layoutManager = it
                 addItemDecoration(DividerItemDecoration(applicationContext, it.orientation))
             }
-
-            adapter = CarModelAdapter(applicationContext, {
-                fareViewModel.flowAction(SelectCarModelAction(it))
-            }, { view, carModel ->
-                fareViewModel.selectedCarModel.observe {
-                    view.isSelected = (it == carModel)
-                }
-            })
+            adapter = FareAdapter()
         }
     }
 
@@ -145,11 +137,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
             }
 
             fareViewModel.let {
-                it.carModelsOfSelectedCarType.observe { carModels ->
-                    rvCarModel.setItem<CarModel, CarModelAdapter>(carModels)
+                it.calculatedFare.observe { fare ->
+                    rvCarModel.setItem<Fare, FareAdapter>(fare)
                 }
-
-                it.calculatedFare.observe(tvFare::setText)
             }
         }
     }

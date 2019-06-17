@@ -10,7 +10,6 @@ import com.example.socarpaymentcalculate.viewmodel.base.BaseViewModel
 import com.google.android.gms.maps.model.LatLngBounds
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.Observables
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
@@ -29,8 +28,6 @@ class MapViewModel(private val repository: TmapRepository) : BaseViewModel() {
     val searchedEndPoint: Observable<String>
         get() = _searchedEndPoint.map(Poi::name)
 
-    private var searchSubscription: Disposable? = null
-
     init {
         actionStream
             .filterTo(SetStartPointAction::class.java)
@@ -44,37 +41,30 @@ class MapViewModel(private val repository: TmapRepository) : BaseViewModel() {
             .subscribe(::setEndPoint)
             .track()
 
-        actionStream
-            .filterTo(ClickSearchButtonAction::class.java)
-            .subscribe { onClickSearch() }
-            .track()
-
-        onClickSearch()
+        subscribePoiDataToCalculateRoute()
     }
 
-    private fun onClickSearch() {
+    private fun subscribePoiDataToCalculateRoute() {
 
-        if (searchSubscription != null) {
-            searchSubscription?.dispose()
-            searchSubscription = null
-        }
-
-        searchSubscription =
-            Observables.combineLatest(
-                _searchedStartPoint,
-                _searchedEndPoint
-            ) { start, end ->
-                Pair(start, end)
-            }.observeOn(Schedulers.io())
-                .flatMap {
-                    repository.getRoutes(it.first, it.second)
-                        .toObservable()
-                }
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    ::calculateMapData,
-                    ::handleRemoteError
-                )
+        Observables.combineLatest(
+            _searchedStartPoint,
+            _searchedEndPoint
+        ) { start, end ->
+            startLoading()
+            Pair(start, end)
+        }.observeOn(Schedulers.io())
+            .flatMap {
+                repository.getRoutes(it.first, it.second)
+                    .toObservable()
+            }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {
+                    endLoading()
+                    calculateMapData(it)
+                },
+                ::handleRemoteError
+            ).track()
     }
 
     private fun setStartPoint(startPoint: Poi) {

@@ -38,6 +38,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        progressBar = binding.pgHome
+
         fareViewModel = getViewModel(FareViewModel::class.java)
         mapViewModel = getViewModel(MapViewModel::class.java)
 
@@ -131,8 +133,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
     private fun setupObservingData() {
         bind {
-            mapViewModel.let {
-                it.navigation.observe { navigation ->
+            mapViewModel.let { vm ->
+                vm.navigation.observe { navigation ->
                     mapView.setCameraFocus(navigation.mapFocus)
                     mapView.setStartPointMarker(navigation.startPointMarkerPosition)
                     mapView.setEndPointMarker(navigation.endPointMarkerPosition)
@@ -140,12 +142,15 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
                     fareViewModel.flowAction(DetermineRouteAction(navigation.route))
                 }
 
-                it.searchedStartPoint.observe(tvStartPoint::setColoredText)
-                it.searchedEndPoint.observe(tvEndPoint::setColoredText)
+                vm.searchedStartPoint.observe(tvStartPoint::setColoredText)
+                vm.searchedEndPoint.observe(tvEndPoint::setColoredText)
+
+                vm.isLoading.observe(::toggleProgressBar)
+                vm.errorMessage.observe(::showToastMessage)
             }
 
-            fareViewModel.let {
-                it.calculatedFare.observe { fare ->
+            fareViewModel.let { vm ->
+                vm.calculatedFare.observe { fare ->
                     rvCarModel.setItem<Fare, FareAdapter>(fare)
                 }
             }

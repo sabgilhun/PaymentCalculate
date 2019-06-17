@@ -38,7 +38,7 @@ class FareViewModel(private val repository: TmapRepository) : BaseViewModel() {
             .subscribe(::setRoute)
             .track()
 
-        calculateFare()
+        subscribeRouteDataToCalculateFare()
     }
 
     private fun onSelectCarType(selectedCarType: CarType) {
@@ -49,7 +49,7 @@ class FareViewModel(private val repository: TmapRepository) : BaseViewModel() {
         this.route.onNext(route)
     }
 
-    private fun calculateFare() {
+    private fun subscribeRouteDataToCalculateFare() {
         Observables.combineLatest(
             route,
             _selectedCarType

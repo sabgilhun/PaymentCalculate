@@ -7,6 +7,7 @@ import com.example.socarpaymentcalculate.data.model.Poi
 import com.example.socarpaymentcalculate.viewmodel.base.BaseViewModel
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
+import java.util.concurrent.TimeUnit
 
 class SearchViewModel(private val repository: TmapRepository) : BaseViewModel() {
 
@@ -25,16 +26,19 @@ class SearchViewModel(private val repository: TmapRepository) : BaseViewModel() 
 
         actionStream
             .filterTo(SearchButtonClickAction::class.java)
+            .throttleFirst(1, TimeUnit.SECONDS)
             .subscribe { searchPois() }
             .track()
     }
 
     private fun searchPois() {
         if (!keyword.isBlank()) {
+            startLoading()
             repository.getPois(keyword)
                 .setNetworkingThread()
                 .subscribe(
                     {
+                        endLoading()
                         _searchedPois.onNext(it)
                     },
                     ::handleRemoteError

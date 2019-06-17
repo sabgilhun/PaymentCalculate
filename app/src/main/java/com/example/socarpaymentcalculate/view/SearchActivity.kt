@@ -30,6 +30,8 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_sea
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        progressBar = binding.pgSearch
+
         window.apply {
             decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
             statusBarColor = Color.WHITE
@@ -70,9 +72,18 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_sea
     }
 
     private fun setupObservingData() {
-        searchViewModel.searchedPois.observe {
-            binding.rvPois.setItem<Poi, PoiAdapter>(it)
+        bind {
+            searchViewModel.let { vm ->
+                vm.searchedPois.observe {
+                    rvPois.setItem<Poi, PoiAdapter>(it)
+                }
+
+                vm.isLoading.observe(::toggleProgressBar)
+
+                vm.errorMessage.observe(::showToastMessage)
+            }
         }
+
     }
 
     private fun setupListener() {

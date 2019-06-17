@@ -2,6 +2,7 @@ package com.example.socarpaymentcalculate.view.base
 
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -18,8 +19,9 @@ abstract class BaseActivity<B : ViewDataBinding> constructor(
     private val layoutId: Int
 ) : AppCompatActivity() {
 
-    protected lateinit var binding: B
-        private set
+    protected val binding: B by lazy {
+        DataBindingUtil.setContentView<B>(this, layoutId)
+    }
 
     protected var progressBar: View? = null
 
@@ -27,7 +29,6 @@ abstract class BaseActivity<B : ViewDataBinding> constructor(
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, layoutId)
         binding.lifecycleOwner = this
 
     }
@@ -48,13 +49,23 @@ abstract class BaseActivity<B : ViewDataBinding> constructor(
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
     }
 
-    protected fun showProgressBar() {
-        progressBar?.visibility = View.VISIBLE
+    protected fun toggleProgressBar(isVisible: Boolean) {
+        bind {
+            if (isVisible) {
+                root.alpha = 0.6f
+                window.setFlags(
+                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+                )
+                progressBar?.visibility = View.VISIBLE
+            } else {
+                root.alpha = 1.0f
+                window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+                progressBar?.visibility = View.GONE
+            }
+        }
     }
 
-    protected fun hideProgressBar() {
-        progressBar?.visibility = View.GONE
-    }
 
     protected inline fun bind(block: B.() -> Unit) {
         binding.block()

@@ -2,7 +2,9 @@ package com.example.socarpaymentcalculate.view
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
+import android.view.View
 import androidx.annotation.IdRes
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -28,6 +30,11 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_sea
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        window.apply {
+            decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+            statusBarColor = Color.WHITE
+        }
 
         selectedView = intent.getIntExtra(EXTRA_VIEW_ID, 0)
 

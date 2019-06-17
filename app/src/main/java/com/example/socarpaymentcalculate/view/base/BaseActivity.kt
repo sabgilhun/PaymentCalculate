@@ -1,6 +1,5 @@
 package com.example.socarpaymentcalculate.view.base
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -31,10 +30,6 @@ abstract class BaseActivity<B : ViewDataBinding> constructor(
         binding = DataBindingUtil.setContentView(this, layoutId)
         binding.lifecycleOwner = this
 
-        window.apply {
-            decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-            statusBarColor = Color.WHITE
-        }
     }
 
     protected fun <VM : ViewModel> getViewModel(vmClass: Class<VM>): VM {

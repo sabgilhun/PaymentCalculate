@@ -29,6 +29,9 @@ class NavigationGoogleMapView @JvmOverloads constructor(
 
     private var routePolyline: Polyline? = null
 
+    /* Listeners */
+    private var cameraMoveListener: (() -> Unit)? = null
+
     init {
         if (attrs != null) {
 
@@ -59,6 +62,7 @@ class NavigationGoogleMapView @JvmOverloads constructor(
     override fun onMapReady(googleMap: GoogleMap) {
         super.onMapReady(googleMap)
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(37.576209, 126.976817), 16.0f))
+        googleMap.setOnCameraMoveListener(cameraMoveListener)
     }
 
     fun setStartPointMarker(latLng: LatLng) {
@@ -95,6 +99,11 @@ class NavigationGoogleMapView @JvmOverloads constructor(
 
     fun setCameraFocus(latLngBounds: LatLngBounds?) {
         googleMap?.animateCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds, CAMERA_FOCUS_BOUND_PADDING))
+    }
+
+    fun setOnCameraMoveListener(listener: () -> Unit) {
+        cameraMoveListener = listener
+        googleMap?.setOnCameraMoveListener(listener)
     }
 
     companion object {

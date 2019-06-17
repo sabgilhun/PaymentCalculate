@@ -24,6 +24,7 @@ import com.example.socarpaymentcalculate.viewmodel.fare.SelectCarTypeAction
 import com.example.socarpaymentcalculate.viewmodel.map.MapViewModel
 import com.example.socarpaymentcalculate.viewmodel.map.SetEndPointAction
 import com.example.socarpaymentcalculate.viewmodel.map.SetStartPointAction
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 
 class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
@@ -31,11 +32,15 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
     private lateinit var mapViewModel: MapViewModel
 
+    private lateinit var bottomSheetBehavior: BottomSheetBehavior<View>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         fareViewModel = getViewModel(FareViewModel::class.java)
         mapViewModel = getViewModel(MapViewModel::class.java)
+
+        setupBottomSheetStateHandler()
 
         setupCarTypeRecyclerView()
 
@@ -139,6 +144,24 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
             fareViewModel.let {
                 it.calculatedFare.observe { fare ->
                     rvCarModel.setItem<Fare, FareAdapter>(fare)
+                }
+            }
+        }
+    }
+
+    private fun setupBottomSheetStateHandler() {
+        bind {
+            bottomSheetBehavior = BottomSheetBehavior.from(clBottomSheet)
+
+            clBottomSheet.setOnClickListener {
+                if (bottomSheetBehavior.state != BottomSheetBehavior.STATE_EXPANDED) {
+                    bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+                }
+            }
+
+            mapView.setOnCameraMoveListener {
+                if (bottomSheetBehavior.state != BottomSheetBehavior.STATE_COLLAPSED) {
+                    bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
                 }
             }
         }

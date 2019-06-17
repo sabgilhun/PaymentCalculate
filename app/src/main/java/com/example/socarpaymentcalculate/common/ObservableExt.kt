@@ -5,7 +5,6 @@ import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import io.reactivex.subjects.PublishSubject
 
 fun <T> Single<T>.setNetworkingThread(): Single<T> =
     this.subscribeOn(Schedulers.io())

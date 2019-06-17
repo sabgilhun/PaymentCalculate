@@ -12,6 +12,12 @@
 	<string name="total_fare_title">예상 요금(주중/주말)</string>
 	<string name="total_fare">%,d원</string>
 	
+	<string name="search_start_point_title">출발</string>
+	<string name="search_end_point_title">도착</string>
+	
+	<string name="search_start_point_hint">출발지를 검색하세요</string>
+	<string name="search_end_point_hint">도착지를 검색하세요</string>
+	
 	<string name="subcompact">경차</string>
 	<string name="compact">소형차</string>
 	<string name="semi_midsize">준중형차</string>

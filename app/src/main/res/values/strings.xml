@@ -1,6 +1,7 @@
 <resources>
 	<string name="app_name">SocarPaymentCalculate</string>
 	
+	<!--item_fare-->
 	<string name="fare_kilo_meter">•%,d원/킬로미터당</string>
 	<string name="fare_minute_weekday">•%,d원/10분당(주중)</string>
 	<string name="fare_minute_weekend">•%,d원/10분당(주말)</string>
@@ -12,12 +13,17 @@
 	<string name="total_fare_title">예상 요금(주중/주말)</string>
 	<string name="total_fare">%,d원</string>
 	
+	<!--activity_home-->
 	<string name="search_start_point_title">출발</string>
 	<string name="search_end_point_title">도착</string>
-	
 	<string name="search_start_point_hint">출발지를 검색하세요</string>
 	<string name="search_end_point_hint">도착지를 검색하세요</string>
+	<string name="fare_list">요금표</string>
 	
+	<!--activity_search-->
+	<string name="search_hint">여기서 검색</string>
+	
+	<!--for enum-->
 	<string name="subcompact">경차</string>
 	<string name="compact">소형차</string>
 	<string name="semi_midsize">준중형차</string>
@@ -30,7 +36,6 @@
 	<string name="midsize_suv">중형 SUV</string>
 	<string name="van">승합차</string>
 	<string name="high_class">수입차</string>
-	
 	
 	<string name="all_new_morning">올뉴모닝</string>
 	<string name="next_spark">넥스트스파크</string>

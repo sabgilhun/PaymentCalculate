@@ -6,7 +6,6 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.IdRes
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.socarpaymentcalculate.Constants.EXTRA_POI
 import com.example.socarpaymentcalculate.Constants.EXTRA_VIEW_ID
@@ -60,13 +59,12 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_sea
     }
 
     private fun setupPoiRecyclerView() {
-        binding.rvPois.apply {
-            LinearLayoutManager(applicationContext).also {
-                layoutManager = it
-                addItemDecoration(DividerItemDecoration(applicationContext, it.orientation))
-            }
-            binding.rvPois.adapter = PoiAdapter {
-                finishActivityAfterItemSelection(it)
+        bind {
+            rvPois.apply {
+                layoutManager = LinearLayoutManager(applicationContext)
+                rvPois.adapter = PoiAdapter {
+                    finishActivityAfterItemSelection(it)
+                }
             }
         }
     }
@@ -78,12 +76,18 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_sea
     }
 
     private fun setupListener() {
-        binding.etSearch.setTextChangeListener {
-            searchViewModel.flowAction(SearchKeywordChangeAction(it))
-        }
+        bind {
+            ivBackButton.setOnClickListener {
+                finish()
+            }
 
-        binding.btnSearch.setOnClickListener {
-            searchViewModel.flowAction(SearchButtonClickAction())
+            etSearch.setTextChangeListener {
+                searchViewModel.flowAction(SearchKeywordChangeAction(it))
+            }
+
+            ivSearch.setOnClickListener {
+                searchViewModel.flowAction(SearchButtonClickAction())
+            }
         }
     }
 

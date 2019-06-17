@@ -12,6 +12,7 @@ import com.example.socarpaymentcalculate.Constants.REQUEST_CODE_HOME_TO_SEARCH
 import com.example.socarpaymentcalculate.R
 import com.example.socarpaymentcalculate.adapter.CarTypeAdapter
 import com.example.socarpaymentcalculate.adapter.FareAdapter
+import com.example.socarpaymentcalculate.common.setColoredText
 import com.example.socarpaymentcalculate.common.setItem
 import com.example.socarpaymentcalculate.data.enums.CarType
 import com.example.socarpaymentcalculate.data.model.Fare
@@ -116,13 +117,15 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
     }
 
     private fun setupCarModelRecyclerView() {
-        binding.rvCarModel.apply {
-            LinearLayoutManager(applicationContext).also {
-                it.orientation = LinearLayoutManager.HORIZONTAL
-                layoutManager = it
-                addItemDecoration(DividerItemDecoration(applicationContext, it.orientation))
+        bind {
+            rvCarModel.apply {
+                LinearLayoutManager(applicationContext).also {
+                    it.orientation = LinearLayoutManager.HORIZONTAL
+                    layoutManager = it
+                    addItemDecoration(DividerItemDecoration(applicationContext, it.orientation))
+                }
+                adapter = FareAdapter()
             }
-            adapter = FareAdapter()
         }
     }
 
@@ -137,8 +140,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
                     fareViewModel.flowAction(DetermineRouteAction(navigation.route))
                 }
 
-                it.searchedStartPoint.observe(tvStartPoint::setText)
-                it.searchedEndPoint.observe(tvEndPoint::setText)
+                it.searchedStartPoint.observe(tvStartPoint::setColoredText)
+                it.searchedEndPoint.observe(tvEndPoint::setColoredText)
             }
 
             fareViewModel.let {

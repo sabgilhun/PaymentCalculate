@@ -55,8 +55,17 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxjava:$rxJavaVersion"
     implementation "io.reactivex.rxjava2:rxkotlin:$rxKotlinVersion"
 
-    // LifeCycle Components
+    // LifeCycle components
     implementation "android.arch.lifecycle:extensions:$lifeCycleVersion"
     implementation "android.arch.lifecycle:viewmodel:$lifeCycleVersion"
+
+    // Room lib
+    implementation "androidx.room:room-runtime:$roomVersion"
+    kapt "androidx.room:room-compiler:$roomVersion"
+    implementation "androidx.room:room-ktx:$roomVersion"
+    implementation "androidx.room:room-rxjava2:$roomVersion"
+
+    // Gson
+    implementation "com.google.code.gson:gson:$gsonVersion"
 
 }

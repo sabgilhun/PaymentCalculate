@@ -2,7 +2,7 @@ package com.example.socarpaymentcalculate.data.model
 
 import android.os.Parcel
 import android.os.Parcelable
-import com.example.socarpaymentcalculate.data.remote.response.PoiSearchResponse
+import com.example.socarpaymentcalculate.data.datasource.remote.response.PoiSearchResponse
 
 data class Poi private constructor(
     val id: String,

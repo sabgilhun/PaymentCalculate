@@ -1,4 +1,4 @@
-package com.example.socarpaymentcalculate.data.remote.reqeust
+package com.example.socarpaymentcalculate.data.datasource.remote.reqeust
 
 import com.example.socarpaymentcalculate.data.model.Poi
 

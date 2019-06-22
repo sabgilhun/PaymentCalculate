@@ -1,27 +1,28 @@
 package com.example.socarpaymentcalculate.data.model
 
-import com.example.socarpaymentcalculate.data.remote.response.RouteSearchResponse
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import com.example.socarpaymentcalculate.data.datasource.remote.response.RouteSearchResponse
 import com.google.android.gms.maps.model.LatLng
 
-data class Route private constructor(
-    val totalDistance: Int,
-    val totalTime: Int,
-    val expectedTaxiFare: Int,
-    val coordinates: List<LatLng>
-
+@Entity(tableName = "SEARCHED_ROUTE")
+data class Route constructor(
+    @PrimaryKey @ColumnInfo(name = "poi_pair") var searchedPoisPair: Pair<Poi, Poi>,
+    @ColumnInfo(name = "total_distance") var totalDistance: Int,
+    @ColumnInfo(name = "total_time") var totalTime: Int,
+    @ColumnInfo(name = "coordinates") var coordinates: List<LatLng>
 ) {
 
     companion object {
         private const val GEOMETRY_LINE_TYPE = "LineString"
 
-        fun from(routeSearchResponse: RouteSearchResponse): Route {
+        fun of(startPoi: Poi, endPois: Poi, routeSearchResponse: RouteSearchResponse): Route {
             val features = routeSearchResponse.features
 
             val totalDistance = features.mapNotNull { it.properties.totalDistance }.first()
 
             val totalTime = features.mapNotNull { it.properties.totalTime }.first()
-
-            val taxiFare = features.mapNotNull { it.properties.taxiFare }.first()
 
             val coordinates =
                 features.filter { it.geometry.type == GEOMETRY_LINE_TYPE }
@@ -36,9 +37,9 @@ data class Route private constructor(
                     }.toList()
 
             return Route(
+                searchedPoisPair = Pair(startPoi, endPois),
                 totalDistance = (totalDistance / 1000.0).toInt(),
                 totalTime = totalTime,
-                expectedTaxiFare = taxiFare,
                 coordinates = coordinates
             )
         }

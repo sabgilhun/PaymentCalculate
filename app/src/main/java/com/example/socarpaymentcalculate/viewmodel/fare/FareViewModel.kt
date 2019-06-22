@@ -1,7 +1,6 @@
 package com.example.socarpaymentcalculate.viewmodel.fare
 
 import com.example.socarpaymentcalculate.common.filterTo
-import com.example.socarpaymentcalculate.data.TmapRepository
 import com.example.socarpaymentcalculate.data.enums.CarModel
 import com.example.socarpaymentcalculate.data.enums.CarType
 import com.example.socarpaymentcalculate.data.model.Fare
@@ -13,11 +12,11 @@ import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 
 
-class FareViewModel(private val repository: TmapRepository) : BaseViewModel() {
+class FareViewModel : BaseViewModel() {
 
     private val route = BehaviorSubject.create<Route>()
 
-    private val _selectedCarType = BehaviorSubject.create<CarType>()
+    private val _selectedCarType = BehaviorSubject.createDefault(CarType.SUBCOMPACT)
     val selectedCarType: Observable<CarType>
         get() = _selectedCarType
 

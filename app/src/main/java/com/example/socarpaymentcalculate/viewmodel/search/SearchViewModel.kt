@@ -39,7 +39,7 @@ class SearchViewModel(private val repository: TmapRepository) : BaseViewModel() 
                 .subscribe(
                     {
                         endLoading()
-                        _searchedPois.onNext(it)
+                        _searchedPois.onNext(it.pois)
                     },
                     ::handleRemoteError
                 )

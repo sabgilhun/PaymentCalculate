@@ -1,14 +1,15 @@
-package com.example.socarpaymentcalculate.data.remote
+package com.example.socarpaymentcalculate.data.datasource
 
 import com.example.socarpaymentcalculate.data.model.Poi
 import com.example.socarpaymentcalculate.data.model.Route
+import com.example.socarpaymentcalculate.data.model.SearchedPois
 import io.reactivex.Single
 
 interface TmapDataSource {
 
     fun getPois(
         keyword: String
-    ): Single<List<Poi>>
+    ): Single<SearchedPois>
 
     fun getRoutes(
         startPoi: Poi,

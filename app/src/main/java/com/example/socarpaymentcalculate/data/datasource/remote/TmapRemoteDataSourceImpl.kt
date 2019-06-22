@@ -1,8 +1,10 @@
-package com.example.socarpaymentcalculate.data.remote
+package com.example.socarpaymentcalculate.data.datasource.remote
 
+import com.example.socarpaymentcalculate.data.datasource.TmapDataSource
+import com.example.socarpaymentcalculate.data.datasource.remote.reqeust.RouteSearchRequestBody
 import com.example.socarpaymentcalculate.data.model.Poi
 import com.example.socarpaymentcalculate.data.model.Route
-import com.example.socarpaymentcalculate.data.remote.reqeust.RouteSearchRequestBody
+import com.example.socarpaymentcalculate.data.model.SearchedPois
 import io.reactivex.Single
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -10,14 +12,7 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
-object TmapDataSourceImpl : TmapDataSource {
-
-    private const val BASE_URL = "https://api2.sktelecom.com/tmap/"
-
-    private const val TMAP_VERSION = "1"
-
-    //TODO 앱 키 프로젝트 그레이들로 빼기
-    private const val APP_KEY = "2d2cb58c-8552-4e62-9f91-eafa999cbfe1"
+class TmapRemoteDataSourceImpl : TmapDataSource {
 
     private val retrofit: TmapApi
 
@@ -38,7 +33,7 @@ object TmapDataSourceImpl : TmapDataSource {
         }
     }
 
-    override fun getPois(keyword: String): Single<List<Poi>> {
+    override fun getPois(keyword: String): Single<SearchedPois> {
 
         return retrofit.getPois(
             version = TMAP_VERSION,
@@ -48,6 +43,8 @@ object TmapDataSourceImpl : TmapDataSource {
             response.searchPoiInfo.pois.poi.map {
                 Poi.from(it)
             }.toList()
+        }.map {
+            SearchedPois.of(keyword, it)
         }
     }
 
@@ -57,8 +54,28 @@ object TmapDataSourceImpl : TmapDataSource {
             version = TMAP_VERSION,
             values = RouteSearchRequestBody.of(startPoi, endPoi, true).fieldMap
         ).map {
-            Route.from(it)
+            Route.of(startPoi, endPoi, it)
         }
     }
 
+    companion object {
+
+        private const val BASE_URL = "https://api2.sktelecom.com/tmap/"
+
+        private const val TMAP_VERSION = "1"
+
+        private const val APP_KEY = "2d2cb58c-8552-4e62-9f91-eafa999cbfe1"
+
+        private var INSTANCE: TmapDataSource? = null
+
+        @JvmStatic
+        fun getInstance(): TmapDataSource {
+            if (INSTANCE == null) {
+                synchronized(TmapRemoteDataSourceImpl::javaClass) {
+                    INSTANCE = TmapRemoteDataSourceImpl()
+                }
+            }
+            return INSTANCE!!
+        }
+    }
 }

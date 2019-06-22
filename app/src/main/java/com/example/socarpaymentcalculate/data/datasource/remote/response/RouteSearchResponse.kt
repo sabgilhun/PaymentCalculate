@@ -1,4 +1,4 @@
-package com.example.socarpaymentcalculate.data.remote.response
+package com.example.socarpaymentcalculate.data.datasource.remote.response
 
 
 import com.google.gson.annotations.Expose

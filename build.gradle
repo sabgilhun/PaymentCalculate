@@ -27,6 +27,10 @@ buildscript {
         retrofitVersion = '2.5.0'
 
         lifeCycleVersion = '1.1.1'
+
+        roomVersion = '2.1.0'
+
+        gsonVersion = '2.8.5'
     }
 
     repositories {

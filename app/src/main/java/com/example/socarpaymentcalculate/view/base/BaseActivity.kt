@@ -34,7 +34,7 @@ abstract class BaseActivity<B : ViewDataBinding> constructor(
     }
 
     protected fun <VM : ViewModel> getViewModel(vmClass: Class<VM>): VM {
-        return ViewModelProviders.of(this, ViewModelFactory).get(vmClass)
+        return ViewModelProviders.of(this, ViewModelFactory.getInstance(application)).get(vmClass)
     }
 
     protected fun Disposable.track() {
@@ -65,7 +65,6 @@ abstract class BaseActivity<B : ViewDataBinding> constructor(
             }
         }
     }
-
 
     protected inline fun bind(block: B.() -> Unit) {
         binding.block()

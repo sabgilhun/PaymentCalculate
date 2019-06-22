@@ -1,7 +1,7 @@
-package com.example.socarpaymentcalculate.data.remote
+package com.example.socarpaymentcalculate.data.datasource.remote
 
-import com.example.socarpaymentcalculate.data.remote.response.PoiSearchResponse
-import com.example.socarpaymentcalculate.data.remote.response.RouteSearchResponse
+import com.example.socarpaymentcalculate.data.datasource.remote.response.PoiSearchResponse
+import com.example.socarpaymentcalculate.data.datasource.remote.response.RouteSearchResponse
 import io.reactivex.Single
 import retrofit2.http.*
 

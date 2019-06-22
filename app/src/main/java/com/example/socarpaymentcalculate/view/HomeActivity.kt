@@ -29,9 +29,13 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 
 class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
-    private lateinit var fareViewModel: FareViewModel
+    private val fareViewModel: FareViewModel by lazy {
+        getViewModel(FareViewModel::class.java)
+    }
 
-    private lateinit var mapViewModel: MapViewModel
+    private val mapViewModel: MapViewModel by lazy {
+        getViewModel(MapViewModel::class.java)
+    }
 
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<View>
 
@@ -39,9 +43,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
         super.onCreate(savedInstanceState)
 
         progressBar = binding.pgHome
-
-        fareViewModel = getViewModel(FareViewModel::class.java)
-        mapViewModel = getViewModel(MapViewModel::class.java)
 
         setupBottomSheetStateHandler()
 

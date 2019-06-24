@@ -1,9 +1,9 @@
 package com.example.socarpaymentcalculate.data
 
+import com.example.socarpaymentcalculate.common.Optional
 import com.example.socarpaymentcalculate.data.datasource.TmapDataSource
 import com.example.socarpaymentcalculate.data.model.Poi
 import com.example.socarpaymentcalculate.data.model.Route
-import com.example.socarpaymentcalculate.data.model.SearchedPois
 import io.reactivex.Single
 
 class TmapRepositoryImpl private constructor(
@@ -11,18 +11,27 @@ class TmapRepositoryImpl private constructor(
     private val localDataSource: TmapDataSource
 ) : TmapRepository {
 
-
     override fun getPois(
         keyword: String
-    ): Single<SearchedPois> {
-        return remoteDataSource.getPois(keyword)
+    ): Single<List<Poi>> {
+        return Single.concat(
+            localDataSource.getPois(keyword),
+            remoteDataSource.getPois(keyword)
+        ).filter(Optional<List<Poi>>::isNotEmpty)
+            .map(Optional<List<Poi>>::get)
+            .firstOrError()
     }
 
     override fun getRoutes(
         startPoi: Poi,
         endPoi: Poi
     ): Single<Route> {
-        return remoteDataSource.getRoutes(startPoi, endPoi)
+        return Single.concat(
+            localDataSource.getRoutes(startPoi, endPoi),
+            remoteDataSource.getRoutes(startPoi, endPoi)
+        ).filter(Optional<Route>::isNotEmpty)
+            .map(Optional<Route>::get)
+            .firstOrError()
     }
 
     companion object {

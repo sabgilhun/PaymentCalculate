@@ -6,12 +6,12 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.example.socarpaymentcalculate.Converter
-import com.example.socarpaymentcalculate.data.model.Route
-import com.example.socarpaymentcalculate.data.model.SearchedKeyword
-import com.example.socarpaymentcalculate.data.model.SearchedPois
+import com.example.socarpaymentcalculate.data.datasource.local.entity.RouteEntity
+import com.example.socarpaymentcalculate.data.datasource.local.entity.KeywordEntity
+import com.example.socarpaymentcalculate.data.datasource.local.entity.PoisEntity
 
 @Database(
-    entities = [Route::class, SearchedKeyword::class, SearchedPois::class],
+    entities = [RouteEntity::class, KeywordEntity::class, PoisEntity::class],
     version = 1,
     exportSchema = false
 )

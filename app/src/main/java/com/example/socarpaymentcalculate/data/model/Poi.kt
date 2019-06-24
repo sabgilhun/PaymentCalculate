@@ -33,6 +33,13 @@ data class Poi private constructor(
     }
 
     companion object {
+
+        @JvmField
+        val CREATOR: Parcelable.Creator<Poi> = object : Parcelable.Creator<Poi> {
+            override fun createFromParcel(source: Parcel): Poi = Poi(source)
+            override fun newArray(size: Int): Array<Poi?> = arrayOfNulls(size)
+        }
+
         fun from(poiSearchResponse: PoiSearchResponse.SearchPoiInfo.Pois.Poi): Poi {
 
             //TODO: 글자 없는 경우 예외 처리 해야 깔끔하게 나옴
@@ -56,12 +63,6 @@ data class Poi private constructor(
                 oldAddressName,
                 newAddressName
             )
-        }
-
-        @JvmField
-        val CREATOR: Parcelable.Creator<Poi> = object : Parcelable.Creator<Poi> {
-            override fun createFromParcel(source: Parcel): Poi = Poi(source)
-            override fun newArray(size: Int): Array<Poi?> = arrayOfNulls(size)
         }
     }
 }

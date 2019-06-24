@@ -1,20 +1,36 @@
-package com.example.socarpaymentcalculate.data.model
+package com.example.socarpaymentcalculate.data.datasource.local.entity
 
-import com.example.socarpaymentcalculate.data.datasource.local.entity.RouteEntity
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.example.socarpaymentcalculate.data.datasource.remote.response.RouteSearchResponse
+import com.example.socarpaymentcalculate.data.model.LatLngFactory
+import com.example.socarpaymentcalculate.data.model.Poi
 import com.google.android.gms.maps.model.LatLng
 
+@Entity(tableName = "SEARCHED_ROUTE")
+data class RouteEntity constructor(
+    @PrimaryKey
+    @ColumnInfo(name = "poi_pair")
+    var searchedPoisPair: Pair<Poi, Poi>,
 
-data class Route private constructor(
-    val totalDistance: Int,
-    val totalTime: Int,
-    val coordinates: List<LatLng>
+    @ColumnInfo(name = "index")
+    var index: Int,
+
+    @ColumnInfo(name = "total_distance")
+    var totalDistance: Int,
+
+    @ColumnInfo(name = "total_time")
+    var totalTime: Int,
+
+    @ColumnInfo(name = "coordinates")
+    var coordinates: List<LatLng>
 ) {
 
     companion object {
         private const val GEOMETRY_LINE_TYPE = "LineString"
 
-        fun from(routeSearchResponse: RouteSearchResponse): Route {
+        fun of(startPoi: Poi, endPois: Poi, index: Int, routeSearchResponse: RouteSearchResponse): RouteEntity {
             val features = routeSearchResponse.features
 
             val totalDistance = features.mapNotNull { it.properties.totalDistance }.first()
@@ -33,20 +49,13 @@ data class Route private constructor(
                         acc
                     }.toList()
 
-            return Route(
+            return RouteEntity(
+                searchedPoisPair = Pair(startPoi, endPois),
+                index = index,
                 totalDistance = (totalDistance / 1000.0).toInt(),
                 totalTime = totalTime,
                 coordinates = coordinates
             )
         }
-
-        fun from(routeEntity: RouteEntity): Route {
-            return Route(
-                routeEntity.totalDistance,
-                routeEntity.totalTime,
-                routeEntity.coordinates
-            )
-        }
     }
-
 }

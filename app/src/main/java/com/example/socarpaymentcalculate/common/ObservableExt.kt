@@ -1,5 +1,6 @@
 package com.example.socarpaymentcalculate.common
 
+import io.reactivex.Flowable
 import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -15,6 +16,10 @@ fun <T> Maybe<T>.setNetworkingThread(): Maybe<T> =
         .observeOn(AndroidSchedulers.mainThread())
 
 fun <T> Observable<T>.setNetworkingThread(): Observable<T> =
+    this.subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+
+fun <T> Flowable<T>.setNetworkingThread(): Flowable<T> =
     this.subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
 

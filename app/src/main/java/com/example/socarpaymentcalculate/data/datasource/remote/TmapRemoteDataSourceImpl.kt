@@ -1,10 +1,10 @@
 package com.example.socarpaymentcalculate.data.datasource.remote
 
+import com.example.socarpaymentcalculate.common.Optional
 import com.example.socarpaymentcalculate.data.datasource.TmapDataSource
 import com.example.socarpaymentcalculate.data.datasource.remote.reqeust.RouteSearchRequestBody
 import com.example.socarpaymentcalculate.data.model.Poi
 import com.example.socarpaymentcalculate.data.model.Route
-import com.example.socarpaymentcalculate.data.model.SearchedPois
 import io.reactivex.Single
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -33,29 +33,29 @@ class TmapRemoteDataSourceImpl : TmapDataSource {
         }
     }
 
-    override fun getPois(keyword: String): Single<SearchedPois> {
+    override fun getPois(keyword: String): Single<Optional<List<Poi>>> {
 
         return retrofit.getPois(
             version = TMAP_VERSION,
             searchKeyword = keyword,
             appKey = APP_KEY
         ).map { response ->
-            response.searchPoiInfo.pois.poi.map {
-                Poi.from(it)
-            }.toList()
-        }.map {
-            SearchedPois.of(keyword, it)
-        }
+            response.searchPoiInfo.pois.poi.map(Poi.Companion::from).toList()
+        }.map { Optional(it) }
+            .onErrorReturn { Optional(null) }
     }
 
-    override fun getRoutes(startPoi: Poi, endPoi: Poi): Single<Route> {
+    override fun insertPois(searchedPois: List<Poi>) {
+    }
+
+    override fun getRoutes(startPoi: Poi, endPoi: Poi): Single<Optional<Route>> {
 
         return retrofit.getRoutes(
             version = TMAP_VERSION,
             values = RouteSearchRequestBody.of(startPoi, endPoi, true).fieldMap
-        ).map {
-            Route.of(startPoi, endPoi, it)
-        }
+        ).map(Route.Companion::from)
+            .map { Optional(it) }
+            .onErrorReturn { Optional(null) }
     }
 
     companion object {

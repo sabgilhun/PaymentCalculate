@@ -14,8 +14,8 @@ data class Route private constructor(
     companion object {
         private const val GEOMETRY_LINE_TYPE = "LineString"
 
-        fun from(routeSearchResponse: RouteSearchResponse): Route {
-            val features = routeSearchResponse.features
+        fun from(routeResponseSearchSearchResponse: RouteSearchResponse): Route {
+            val features = routeResponseSearchSearchResponse.features
 
             val totalDistance = features.mapNotNull { it.properties.totalDistance }.first()
 

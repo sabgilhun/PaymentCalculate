@@ -17,6 +17,13 @@ interface TmapDataSource {
     ): Single<Optional<Route>>
 
     fun insertPois(
+        keyword: String,
         searchedPois: List<Poi>
+    )
+
+    fun insertRoute(
+        startPoi: Poi,
+        endPoi: Poi,
+        route: Route
     )
 }

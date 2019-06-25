@@ -6,12 +6,12 @@ import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.socarpaymentcalculate.Constants.EXTRA_POI
-import com.example.socarpaymentcalculate.Constants.EXTRA_VIEW_ID
-import com.example.socarpaymentcalculate.Constants.REQUEST_CODE_HOME_TO_SEARCH
 import com.example.socarpaymentcalculate.R
 import com.example.socarpaymentcalculate.adapter.CarTypeAdapter
 import com.example.socarpaymentcalculate.adapter.FareAdapter
+import com.example.socarpaymentcalculate.common.Constants.EXTRA_POI
+import com.example.socarpaymentcalculate.common.Constants.EXTRA_VIEW_ID
+import com.example.socarpaymentcalculate.common.Constants.REQUEST_CODE_HOME_TO_SEARCH
 import com.example.socarpaymentcalculate.common.setColoredText
 import com.example.socarpaymentcalculate.common.setItem
 import com.example.socarpaymentcalculate.data.enums.CarType

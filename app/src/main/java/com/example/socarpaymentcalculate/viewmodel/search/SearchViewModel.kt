@@ -35,14 +35,16 @@ class SearchViewModel(private val repository: TmapRepository) : BaseViewModel() 
         if (!keyword.isBlank()) {
             startLoading()
             repository.getPois(keyword)
+                .toObservable()
                 .setNetworkingThread()
-                .subscribe(
-                    {
-                        endLoading()
-                        _searchedPois.onNext(it)
-                    },
-                    ::handleRemoteError
-                )
+                .subscribe {
+                    endLoading()
+                    if (it.isNotEmpty()) {
+                        _searchedPois.onNext(it.get())
+                    } else {
+                        handleRemoteError(it.getError())
+                    }
+                }
                 .track()
         }
     }

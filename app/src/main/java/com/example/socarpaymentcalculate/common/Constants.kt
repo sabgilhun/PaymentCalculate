@@ -1,4 +1,4 @@
-package com.example.socarpaymentcalculate
+package com.example.socarpaymentcalculate.common
 
 object Constants {
     const val EXTRA_VIEW_ID = "Extra view id"

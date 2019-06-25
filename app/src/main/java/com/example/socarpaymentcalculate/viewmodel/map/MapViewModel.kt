@@ -58,13 +58,14 @@ class MapViewModel(private val repository: TmapRepository) : BaseViewModel() {
                     .toObservable()
             }
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                {
-                    endLoading()
-                    calculateMapData(it)
-                },
-                ::handleRemoteError
-            ).track()
+            .subscribe {
+                endLoading()
+                if (it.isNotEmpty()) {
+                    calculateMapData(it.get())
+                } else {
+                    handleRemoteError(it.getError())
+                }
+            }.track()
     }
 
     private fun setStartPoint(startPoint: Poi) {

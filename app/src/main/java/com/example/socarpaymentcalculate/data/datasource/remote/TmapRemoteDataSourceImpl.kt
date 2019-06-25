@@ -41,12 +41,9 @@ class TmapRemoteDataSourceImpl : TmapDataSource {
             appKey = APP_KEY
         ).map { response ->
             response.searchPoiInfo.pois.poi.map(Poi.Companion::from).toList()
-        }.map { Optional(it) }
-            .onErrorReturn { Optional(null) }
+        }.map { Optional(it, null) }
     }
 
-    override fun insertPois(searchedPois: List<Poi>) {
-    }
 
     override fun getRoutes(startPoi: Poi, endPoi: Poi): Single<Optional<Route>> {
 
@@ -54,8 +51,13 @@ class TmapRemoteDataSourceImpl : TmapDataSource {
             version = TMAP_VERSION,
             values = RouteSearchRequestBody.of(startPoi, endPoi, true).fieldMap
         ).map(Route.Companion::from)
-            .map { Optional(it) }
-            .onErrorReturn { Optional(null) }
+            .map { Optional(it, null) }
+    }
+
+    override fun insertPois(keyword: String, searchedPois: List<Poi>) {
+    }
+
+    override fun insertRoute(startPoi: Poi, endPoi: Poi, route: Route) {
     }
 
     companion object {

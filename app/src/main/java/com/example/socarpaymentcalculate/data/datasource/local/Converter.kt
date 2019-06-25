@@ -1,4 +1,4 @@
-package com.example.socarpaymentcalculate
+package com.example.socarpaymentcalculate.data.datasource.local
 
 import androidx.room.TypeConverter
 import com.example.socarpaymentcalculate.data.model.Poi

@@ -3,7 +3,7 @@ package com.example.socarpaymentcalculate.viewmodel
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.socarpaymentcalculate.Injection
+import com.example.socarpaymentcalculate.common.Injection
 import com.example.socarpaymentcalculate.data.TmapRepository
 import com.example.socarpaymentcalculate.viewmodel.fare.FareViewModel
 import com.example.socarpaymentcalculate.viewmodel.map.MapViewModel

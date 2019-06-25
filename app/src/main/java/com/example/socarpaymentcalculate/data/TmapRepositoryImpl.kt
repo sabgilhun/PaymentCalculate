@@ -13,25 +13,27 @@ class TmapRepositoryImpl private constructor(
 
     override fun getPois(
         keyword: String
-    ): Single<List<Poi>> {
+    ): Single<Optional<List<Poi>>> {
         return Single.concat(
             localDataSource.getPois(keyword),
             remoteDataSource.getPois(keyword)
+                .doOnSuccess { localDataSource.insertPois(keyword, it.get()) }
         ).filter(Optional<List<Poi>>::isNotEmpty)
-            .map(Optional<List<Poi>>::get)
             .firstOrError()
+            .onErrorReturn { Optional(null, it) }
     }
 
     override fun getRoutes(
         startPoi: Poi,
         endPoi: Poi
-    ): Single<Route> {
+    ): Single<Optional<Route>> {
         return Single.concat(
             localDataSource.getRoutes(startPoi, endPoi),
             remoteDataSource.getRoutes(startPoi, endPoi)
+                .doOnSuccess { localDataSource.insertRoute(startPoi, endPoi, it.get()) }
         ).filter(Optional<Route>::isNotEmpty)
-            .map(Optional<Route>::get)
             .firstOrError()
+            .onErrorReturn { Optional(null, it) }
     }
 
     companion object {

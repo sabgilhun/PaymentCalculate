@@ -31,6 +31,8 @@ buildscript {
         roomVersion = '2.1.0'
 
         gsonVersion = '2.8.5'
+
+        stethoVersion = '1.5.1'
     }
 
     repositories {

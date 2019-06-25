@@ -1,4 +1,4 @@
-package com.example.socarpaymentcalculate
+package com.example.socarpaymentcalculate.common
 
 import android.content.Context
 import com.example.socarpaymentcalculate.data.TmapRepository

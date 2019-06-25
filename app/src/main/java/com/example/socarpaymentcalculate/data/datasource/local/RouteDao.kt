@@ -1,22 +1,28 @@
 package com.example.socarpaymentcalculate.data.datasource.local
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
-import com.example.socarpaymentcalculate.data.model.Poi
+import androidx.room.*
 import com.example.socarpaymentcalculate.data.datasource.local.entity.RouteEntity
-import io.reactivex.Completable
-import io.reactivex.Flowable
+import com.example.socarpaymentcalculate.data.model.Poi
 import io.reactivex.Single
 
 @Dao
-interface RouteDao {
+abstract class RouteDao {
 
     @Query("SELECT * FROM SEARCHED_ROUTE WHERE poi_pair = :poiPair")
-    fun getRouteByPoiPair(poiPair: Pair<Poi, Poi>): Single<RouteEntity>
+    abstract fun getRouteByPoiPair(poiPair: Pair<Poi, Poi>): Single<RouteEntity>
+
+    @Query("DELETE FROM SEARCHED_ROUTE WHERE poi_pair NOT IN (SELECT poi_pair FROM SEARCHED_ROUTE ORDER BY time DESC LIMIT 10)")
+    abstract fun deleteOldestRoute()
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertRoute(routeEntity: RouteEntity): Completable
+    abstract fun insertRoute(routeEntity: RouteEntity)
 
+    @Delete
+    abstract fun deleteRoute(routeEntity: RouteEntity)
+
+    @Transaction
+    open fun limitedInsertRoute(routeEntity: RouteEntity) {
+        insertRoute(routeEntity)
+        deleteOldestRoute()
+    }
 }

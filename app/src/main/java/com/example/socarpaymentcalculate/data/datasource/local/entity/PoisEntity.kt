@@ -11,17 +11,17 @@ data class PoisEntity constructor(
     @ColumnInfo(name = "keyword")
     var searchKeyword: String,
 
-    @ColumnInfo(name = "index")
-    var index: Int,
+    @ColumnInfo(name = "time")
+    var time: Long,
 
     @ColumnInfo(name = "pois")
     var pois: List<Poi>
 ) {
     companion object {
-        fun of(searchKeyword: String, index: Int, pois: List<Poi>): PoisEntity {
+        fun of(searchKeyword: String, pois: List<Poi>): PoisEntity {
             return PoisEntity(
                 searchKeyword,
-                index,
+                System.currentTimeMillis(),
                 pois
             )
         }

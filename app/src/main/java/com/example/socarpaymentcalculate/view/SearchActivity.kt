@@ -7,10 +7,10 @@ import android.os.Bundle
 import android.view.View
 import androidx.annotation.IdRes
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.socarpaymentcalculate.Constants.EXTRA_POI
-import com.example.socarpaymentcalculate.Constants.EXTRA_VIEW_ID
 import com.example.socarpaymentcalculate.R
 import com.example.socarpaymentcalculate.adapter.PoiAdapter
+import com.example.socarpaymentcalculate.common.Constants.EXTRA_POI
+import com.example.socarpaymentcalculate.common.Constants.EXTRA_VIEW_ID
 import com.example.socarpaymentcalculate.common.setItem
 import com.example.socarpaymentcalculate.common.setTextChangeListener
 import com.example.socarpaymentcalculate.data.model.Poi

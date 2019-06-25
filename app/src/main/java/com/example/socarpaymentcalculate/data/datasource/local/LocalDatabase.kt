@@ -5,13 +5,11 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.example.socarpaymentcalculate.Converter
-import com.example.socarpaymentcalculate.data.datasource.local.entity.RouteEntity
-import com.example.socarpaymentcalculate.data.datasource.local.entity.KeywordEntity
 import com.example.socarpaymentcalculate.data.datasource.local.entity.PoisEntity
+import com.example.socarpaymentcalculate.data.datasource.local.entity.RouteEntity
 
 @Database(
-    entities = [RouteEntity::class, KeywordEntity::class, PoisEntity::class],
+    entities = [RouteEntity::class, PoisEntity::class],
     version = 1,
     exportSchema = false
 )
@@ -19,8 +17,6 @@ import com.example.socarpaymentcalculate.data.datasource.local.entity.PoisEntity
 abstract class LocalDatabase : RoomDatabase() {
 
     abstract fun routeDao(): RouteDao
-
-    abstract fun searchedKeywordDao(): SearchedKeywordDao
 
     abstract fun searchedPois(): SearchedPoisDao
 

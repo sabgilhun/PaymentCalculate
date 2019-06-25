@@ -42,18 +42,35 @@ data class Poi private constructor(
 
         fun from(poiSearchResponse: PoiSearchResponse.SearchPoiInfo.Pois.Poi): Poi {
 
-            //TODO: 글자 없는 경우 예외 처리 해야 깔끔하게 나옴
-            val oldAddressName = poiSearchResponse.upperAddrName + " " +
-                    poiSearchResponse.middleAddrName + " " +
-                    poiSearchResponse.lowerAddrName + " " +
-                    poiSearchResponse.firstNo + "-" +
-                    poiSearchResponse.secondNo
+            val oldAddressName = StringBuilder(poiSearchResponse.upperAddrName).apply {
+                if (poiSearchResponse.middleAddrName.isNotEmpty()) {
+                    append(" " + poiSearchResponse.middleAddrName)
+                }
+                if (poiSearchResponse.lowerAddrName.isNotEmpty()) {
+                    append(" " + poiSearchResponse.lowerAddrName)
+                }
+                if (poiSearchResponse.firstNo.isNotEmpty()) {
+                    append(" " + poiSearchResponse.firstNo)
+                }
+                if (poiSearchResponse.secondNo.isNotEmpty() && poiSearchResponse.secondNo != "0") {
+                    append("-" + poiSearchResponse.secondNo)
+                }
+            }.toString()
 
-            val newAddressName = poiSearchResponse.upperAddrName + " " +
-                    poiSearchResponse.middleAddrName + " " +
-                    poiSearchResponse.roadName + " " +
-                    poiSearchResponse.firstBuildNo + "-" +
-                    poiSearchResponse.secondBuildNo
+            val newAddressName = StringBuilder(poiSearchResponse.upperAddrName).apply {
+                if (poiSearchResponse.middleAddrName.isNotEmpty()) {
+                    append(" " + poiSearchResponse.middleAddrName)
+                }
+                if (poiSearchResponse.roadName.isNotEmpty()) {
+                    append(" " + poiSearchResponse.roadName)
+                }
+                if (poiSearchResponse.firstBuildNo.isNotEmpty()) {
+                    append(" " + poiSearchResponse.firstBuildNo)
+                }
+                if (poiSearchResponse.secondBuildNo.isNotEmpty() && poiSearchResponse.secondBuildNo != "0") {
+                    append("-" + poiSearchResponse.secondBuildNo)
+                }
+            }.toString()
 
             return Poi(
                 poiSearchResponse.id,
